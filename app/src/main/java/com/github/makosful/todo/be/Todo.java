@@ -8,6 +8,10 @@ public class Todo implements Serializable {
     private String notes;
     private String imageUrl;
 
+    public Todo(String title) {
+        this.title = title;
+    }
+
     public int getId() {
         return id;
     }
