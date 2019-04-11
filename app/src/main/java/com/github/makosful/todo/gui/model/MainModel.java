@@ -27,12 +27,7 @@ public class MainModel {
         this.logic = new BusinessLayerFacade();
         this.context = context;
 
-        this.todoList = new ArrayList<>();
-        this.todoList.add(new Todo("First"));
-        this.todoList.add(new Todo("Second"));
-        this.todoList.add(new Todo("Third"));
-        this.todoList.add(new Todo("Fourth"));
-        this.todoList.add(new Todo("Fifth"));
+        this.todoList = this.logic.getTodoStorage().readAll();
     }
 
     /**
@@ -41,5 +36,17 @@ public class MainModel {
      */
     public List<Todo> getTodoList() {
         return this.todoList;
+    }
+
+    public void seedStorage() {
+        this.todoList.add(new Todo("First"));
+        this.todoList.add(new Todo("Second"));
+        this.todoList.add(new Todo("Third"));
+        this.todoList.add(new Todo("Fourth"));
+        this.todoList.add(new Todo("Fifth"));
+        this.todoList.add(new Todo("Sixth"));
+        this.todoList.add(new Todo("Seventh"));
+        this.todoList.add(new Todo("Eighth"));
+        this.todoList.add(new Todo("Ninth"));
     }
 }
