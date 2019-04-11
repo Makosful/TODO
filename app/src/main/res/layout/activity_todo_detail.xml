@@ -6,4 +6,64 @@
     android:layout_height="match_parent"
     tools:context=".gui.controller.TodoDetailActivity">
 
+    <TextView
+        android:id="@+id/tv_todo_detail_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="TextView"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_todo_detail_image"
+        android:layout_width="0dp"
+        android:layout_height="256dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_todo_detail_title"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <Button
+        android:id="@+id/btn_todo_detail_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_todo_detail_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Update"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_todo_detail_notes"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text=" Nam sed ante nulla. Nam eu suscipit lorem, in pharetra mi. Phasellus bibendum, tortor a gravida fringilla, est ante molestie tortor, vitae porta nibh mi at turpis. Nunc consequat eros elementum, lobortis felis ut, feugiat orci. Praesent congue sodales erat in elementum. Vestibulum sit amet libero laoreet, sodales neque vel, elementum tortor. Morbi pharetra imperdiet dolor eget finibus. Etiam maximus bibendum metus, quis faucibus turpis varius congue. Suspendisse potenti. Phasellus elementum urna vel urna sollicitudin, et rutrum leo convallis. Cras commodo quam congue tristique consequat. Donec aliquam enim in scelerisque mattis. Nunc blandit ultrices semper. Fusce id augue vel mi fringilla consectetur. Quisque vitae justo quis risus pellentesque sagittis et non tortor. "
+        app:layout_constraintBottom_toTopOf="@+id/btn_todo_detail_update"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_todo_detail_image"
+        tools:text=" Nam sed ante nulla. Nam eu suscipit lorem, in pharetra mi. Phasellus bibendum, tortor a gravida fringilla, est ante molestie tortor, vitae porta nibh mi at turpis. Nunc consequat eros elementum, lobortis felis ut, feugiat orci. Praesent congue sodales erat in elementum. Vestibulum sit amet libero laoreet, sodales neque vel, elementum tortor. Morbi pharetra imperdiet dolor eget finibus. Etiam maximus bibendum metus, quis faucibus turpis varius congue. Suspendisse potenti. Phasellus elementum urna vel urna sollicitudin, et rutrum leo convallis. Cras commodo quam congue tristique consequat. Donec aliquam enim in scelerisque mattis. Nunc blandit ultrices semper. Fusce id augue vel mi fringilla consectetur. Quisque vitae justo quis risus pellentesque sagittis et non tortor. " />
+
 </android.support.constraint.ConstraintLayout>
