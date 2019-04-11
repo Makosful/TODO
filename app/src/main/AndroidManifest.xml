@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".gui.controller.TodoDetail"></activity>
+        <activity android:name=".gui.controller.TodoUpdate" />
+        <activity android:name=".gui.controller.TodoAdd" />
         <activity android:name=".gui.controller.TodoList">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
