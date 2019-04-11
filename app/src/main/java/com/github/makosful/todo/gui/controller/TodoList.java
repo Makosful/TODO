@@ -22,8 +22,8 @@ import com.github.makosful.todo.gui.model.MainModel;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
+public class TodoList extends AppCompatActivity {
+    private static final String TAG = "TodoList";
 
     /**
      * The local instance of the MainModel
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_todo_list);
 
         Log.d(TAG, "onCreate: Creates a new instance of the MainModel");
         this.model = new MainModel(this);
