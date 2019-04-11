@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 public class Todo implements Serializable {
     private int id;
+    private String title;
+    private String notes;
+    private String imageUrl;
 
     public int getId() {
         return id;
@@ -11,5 +14,29 @@ public class Todo implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
