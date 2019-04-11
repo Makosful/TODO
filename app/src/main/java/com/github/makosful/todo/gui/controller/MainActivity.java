@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,7 +25,13 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
+    /**
+     * The local instance of the MainModel
+     */
     private MainModel model;
+
+    // Views
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +42,18 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "onCreate: Creates a new instance of the MainModel");
         this.model = new MainModel(this);
+
+        Log.d(TAG, "onCreate: Getting the RecyclerView reference from the Layout file");
+        this.recyclerView = this.findViewById(R.id.rv_todo_list_list);
+
+        Log.d(TAG, "onCreate: Creating a new TodoAdapter for the RecyclerView");
+        final TodoAdapter adapter = new TodoAdapter(this, this.model.getTodoList());
+        this.recyclerView.setAdapter(adapter);
+
+        // RecyclerView.FixedFixed allows for performance optimization.
+        // If the View's visual size will never change, this can be set to true.
+        this.recyclerView.setHasFixedSize(true);
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     /**
