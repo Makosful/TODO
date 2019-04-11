@@ -27,6 +27,7 @@ public class Common {
     // EXTRA_DATA_ followed by the name of the data being passed in.
     // Fields used to passing in result data should use the naming scheme EXTRA_RESULT_ followed by
     // the name of the data being passed in
-    public static final String EXTRA_DATA_TODO_ID = "todoId";
-    public static final String EXTRA_RESULT_SAMPLE = ""; // Sample, remove once a proper code has been defined
+    public static final String EXTRA_DATA_TODO    = "dataTodo";
+    public static final String EXTRA_DATA_TODO_ID = "dataTodoId";
+    public static final String EXTRA_RESULT_TODO  = "resultTodo";
 }
