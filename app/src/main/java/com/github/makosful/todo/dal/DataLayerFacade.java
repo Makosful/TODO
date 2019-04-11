@@ -14,4 +14,9 @@ public class DataLayerFacade implements IDAL {
     public DataLayerFacade() {
         this.todoStorage = new TodoInMemory();
     }
+
+    @Override
+    public IStorage<Todo> getTodoStorage() {
+        return this.todoStorage;
+    }
 }
