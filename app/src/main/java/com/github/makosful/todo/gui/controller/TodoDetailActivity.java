@@ -5,11 +5,11 @@ import android.os.Bundle;
 
 import com.github.makosful.todo.R;
 
-public class TodoAdd extends AppCompatActivity {
+public class TodoDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_todo_add);
+        setContentView(R.layout.activity_todo_detail);
     }
 }

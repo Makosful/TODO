@@ -19,10 +19,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".gui.controller.TodoDetail" />
-        <activity android:name=".gui.controller.TodoUpdate" />
-        <activity android:name=".gui.controller.TodoAdd" />
-        <activity android:name=".gui.controller.TodoList" />
+        <activity android:name=".gui.controller.TodoDetailActivity" />
+        <activity android:name=".gui.controller.TodoUpdateActivity" />
+        <activity android:name=".gui.controller.TodoAddActivity" />
+        <activity android:name=".gui.controller.TodoListActivity" />
     </application>
 
 </manifest>

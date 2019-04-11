@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.github.makosful.todo.R;
-import com.github.makosful.todo.gui.controller.TodoList;
 import com.github.makosful.todo.gui.model.MainModel;
 
 /**
@@ -21,6 +20,6 @@ public class MainActivity extends AppCompatActivity {
 
         new MainModel(this).seedStorage();
 
-        startActivity(new Intent(this, TodoList.class));
+        startActivity(new Intent(this, TodoListActivity.class));
     }
 }

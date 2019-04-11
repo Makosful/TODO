@@ -22,8 +22,8 @@ import com.github.makosful.todo.gui.model.MainModel;
 
 import java.util.List;
 
-public class TodoList extends AppCompatActivity {
-    private static final String TAG = "TodoList";
+public class TodoListActivity extends AppCompatActivity {
+    private static final String TAG = "TodoListActivity";
 
     /**
      * The local instance of the MainModel
@@ -116,20 +116,20 @@ public class TodoList extends AppCompatActivity {
         }
 
         /**
-         * Opens the TodoDetail Activity.
+         * Opens the TodoDetailActivity Activity.
          * The Todo item contained in the Activity is based on the ID passed in
          * @param id The ID of the Todo item to fill the Activity with
          */
         private void openDetailView(int id) {
             Log.d(TAG, "openDetailView() called with: id = [" + id + "]");
 
-            Log.d(TAG, "openDetailView: Creating new Intent for the TodoDetail class");
-            Intent i = new Intent(this.context, TodoDetail.class);
+            Log.d(TAG, "openDetailView: Creating new Intent for the TodoDetailActivity class");
+            Intent i = new Intent(this.context, TodoDetailActivity.class);
 
             Log.d(TAG, "openDetailView: Added the ID to the Intent's extra");
             i.putExtra(Common.EXTRA_DATA_TODO_ID, id);
 
-            Log.d(TAG, "openDetailView: Starts the TodoDetail Activity");
+            Log.d(TAG, "openDetailView: Starts the TodoDetailActivity Activity");
             ((Activity)this.context).startActivityForResult(i, Common.ACTIVITY_REQUEST_CODE_TODO_DETAIL);
         }
     }
