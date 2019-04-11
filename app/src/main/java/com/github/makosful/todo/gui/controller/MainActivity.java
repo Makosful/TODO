@@ -34,6 +34,84 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * This is the adapter class that's responsible for mapping the Todo Business Entity to the
+     * RecyclerView
+     */
+    private class TodoAdapter extends RecyclerView.Adapter<TodoViewHolder> {
+        private static final String TAG = "TodoAdapter";
+
+        private final Context context;
+        private final List<Todo> todoList;
+
+        public TodoAdapter(Context context, List<Todo> todoList) {
+            Log.d(TAG, "TodoAdapter() called with: context = [" + context + "], todoList = [" + todoList + "]");
+            this.context = context;
+            this.todoList = todoList;
+        }
+
+        @NonNull
+        @Override
+        public TodoViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+            Log.d(TAG, "onCreateViewHolder() called with: viewGroup = [" + viewGroup + "], i = [" + i + "]");
+
+            Log.d(TAG, "onCreateViewHolder: Creating a LayoutInflater from the current Context");
+            LayoutInflater inflater = LayoutInflater.from(this.context);
+
+            Log.d(TAG, "onCreateViewHolder: Attaches the correct layout file to the adapter");
+            View view = inflater.inflate(R.layout.adapter_todo_item, viewGroup, false);
+
+            Log.d(TAG, "onCreateViewHolder: Creates a new TodoViewHolder and returns it");
+            return new TodoViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull TodoViewHolder todoViewHolder, int i) {
+            Log.d(TAG, "onBindViewHolder() called with: todoViewHolder = [" + todoViewHolder + "], i = [" + i + "]");
+
+            final Todo todo = this.todoList.get(i);
+
+            Log.d(TAG, "onBindViewHolder: Sets the title of the current TODO item");
+            todoViewHolder.tv_title.setText(todo.getTitle());
+
+            todoViewHolder.parent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openDetailView(todo.getId());
+                }
+            });
+        }
+
+        /**
+         * Gets the size of the adapter's list
+         * @return Returns an Integer representing the number of items known to the adapter.
+         */
+        @Override
+        public int getItemCount() {
+            final int size = this.todoList.size();
+            Log.d(TAG, "getItemCount: Current item count: " + size);
+            return size;
+        }
+
+        /**
+         * Opens the TodoDetail Activity.
+         * The Todo item contained in the Activity is based on the ID passed in
+         * @param id The ID of the Todo item to fill the Activity with
+         */
+        private void openDetailView(int id) {
+            Log.d(TAG, "openDetailView() called with: id = [" + id + "]");
+
+            Log.d(TAG, "openDetailView: Creating new Intent for the TodoDetail class");
+            Intent i = new Intent(this.context, TodoDetail.class);
+
+            Log.d(TAG, "openDetailView: Added the ID to the Intent's extra");
+            i.putExtra(Common.EXTRA_DATA_TODO_ID, id);
+
+            Log.d(TAG, "openDetailView: Starts the TodoDetail Activity");
+            ((Activity)this.context).startActivityForResult(i, Common.ACTIVITY_REQUEST_CODE_TODO_DETAIL);
+        }
+    }
+
+    /**
      * This class represents a single TODO item in the RecyclerView and holds the related
      * information
      */
