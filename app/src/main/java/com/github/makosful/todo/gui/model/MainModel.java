@@ -27,7 +27,12 @@ public class MainModel {
         this.logic = new BusinessLayerFacade();
         this.context = context;
 
-        this.todoList = new ArrayList<>(); // Replace with a method call to the storage later
+        this.todoList = new ArrayList<>();
+        this.todoList.add(new Todo("First"));
+        this.todoList.add(new Todo("Second"));
+        this.todoList.add(new Todo("Third"));
+        this.todoList.add(new Todo("Fourth"));
+        this.todoList.add(new Todo("Fifth"));
     }
 
     /**
