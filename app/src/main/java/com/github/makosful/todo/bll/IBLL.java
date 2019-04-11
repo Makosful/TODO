@@ -10,4 +10,9 @@ import com.github.makosful.todo.bll.storage.IStorage;
  * the BLL package.
  */
 public interface IBLL {
+    /**
+     * Gets the local instance of the TODO storage
+     * @return An instance of the TODO storage
+     */
+    IStorage<Todo> getTodoStorage();
 }
