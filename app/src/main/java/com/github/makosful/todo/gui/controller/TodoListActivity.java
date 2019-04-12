@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.github.makosful.todo.Common;
@@ -29,9 +30,9 @@ public class TodoListActivity extends AppCompatActivity {
      * The local instance of the MainModel
      */
     private MainModel model;
-
     // Views
     private RecyclerView recyclerView;
+    private Button btnNotice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,21 @@ public class TodoListActivity extends AppCompatActivity {
         // If the View's visual size will never change, this can be set to true.
         this.recyclerView.setHasFixedSize(true);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    public void openNoticeActivity() {
+        Intent i = new Intent(this, NotificationActivity.class);
+        startActivity(i);
+    }
+
+    public void pushNotice(View view) {
+        btnNotice = findViewById(R.id.btnNotice);
+        btnNotice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openNoticeActivity();
+            }
+        });
     }
 
     /**
