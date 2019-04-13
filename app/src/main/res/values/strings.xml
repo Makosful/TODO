@@ -2,4 +2,8 @@
     <string name="app_name">TODO</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+    <string name="details">Details</string>
+    <string name="defaultNotice">Default Notice</string>
+    <string name="importantNotice">Important Notice</string>
+    <string name="timeDialog">Time dialog</string>
 </resources>
