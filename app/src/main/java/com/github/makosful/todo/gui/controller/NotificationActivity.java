@@ -123,7 +123,6 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
                 .build();
 
         notificationManager.notify(noticeId++, notice);
-
     }
 
     public void sendDefaultNotice(View view) {
