@@ -29,6 +29,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import com.github.makosful.todo.R;
 import com.github.makosful.todo.bll.notifications.NotificationReceiver;
+
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import static com.github.makosful.todo.bll.notifications.NotificationHelper.CHANNEL_1_ID;
@@ -46,13 +48,13 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notification);
+        setContentView(R.layout.activity_todo_add);
 
         notificationManager = NotificationManagerCompat.from(this);
         etTitle = findViewById(R.id.etTitle);
         etDescription = findViewById(R.id.etDescription);
 
-        // Gets all necessary fields to set timer for given time on given day
+        // Gets all necessary fields to set timer for the given time
         c = Calendar.getInstance();
         mMinute = c.get(Calendar.MINUTE);
         mHour = c.get(Calendar.HOUR_OF_DAY);
@@ -72,10 +74,7 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
         c.set(Calendar.HOUR_OF_DAY, hourOfDay);
         c.set(Calendar.MINUTE, minute);
 
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, NotificationReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+        mDate = c.getTime();
     }
 
     public void setDate(View view) {
@@ -89,10 +88,27 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
         mYear = year;
         mMonth = month;
         mDay = dayOfMonth;
+
+        mDate = c.getTime();
     }
 
     public void addPicture(View view) {
+        // TODO Add (optional) picture to the task.
+        Toast.makeText(this, "Not added yet.", Toast.LENGTH_SHORT).show();
+    }
 
+    public void AddActivity(View view) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, NotificationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+
+        if (c.before(Calendar.getInstance())) {
+            Toast.makeText(this, "Sorry, we can't go back in time. Set time/date to a future date", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+        Toast.makeText(this, "Reminder set for " + DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime()), Toast.LENGTH_SHORT).show();
     }
 
     public void sendImportantNotice(View view) {
@@ -211,6 +227,6 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
     private boolean isNoticeChannelMuted(String chanId) {
         NotificationManager nM = getSystemService(NotificationManager.class);
         NotificationChannel nC = nM.getNotificationChannel(chanId);
-        return nC != null && nC.getImportance() == nM.IMPORTANCE_NONE;
+        return nC != null && nC.getImportance() == NotificationManager.IMPORTANCE_NONE;
     }
 }
