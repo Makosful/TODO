@@ -6,4 +6,6 @@
     <string name="defaultNotice">Default Notice</string>
     <string name="importantNotice">Important Notice</string>
     <string name="timeDialog">Time dialog</string>
+    <string name="dateDialog">Date dialog</string>
+
 </resources>

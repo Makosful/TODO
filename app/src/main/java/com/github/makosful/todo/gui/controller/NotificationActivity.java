@@ -1,6 +1,7 @@
 package com.github.makosful.todo.gui.controller;
 
 import android.app.AlarmManager;
+import android.app.DatePickerDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -22,48 +23,76 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.github.makosful.todo.R;
 import com.github.makosful.todo.bll.notifications.NotificationReceiver;
-
 import java.util.Calendar;
 import java.util.Date;
-
 import static com.github.makosful.todo.bll.notifications.NotificationHelper.CHANNEL_1_ID;
 import static com.github.makosful.todo.bll.notifications.NotificationHelper.CHANNEL_2_ID;
 
-public class NotificationActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
+public class NotificationActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
     private NotificationManagerCompat notificationManager;
-    private EditText et_title;
-    private EditText et_message;
-    private int noticeId = 1;
+    private EditText etTitle;
+    private EditText etDescription;
     private Calendar c;
-    private Date date;
+    private Date mDate;
+    private int noticeId = 1;
+    private int mMinute, mHour, mDay, mMonth, mYear;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
 
         notificationManager = NotificationManagerCompat.from(this);
-        et_title = findViewById(R.id.et_title);
-        et_message = findViewById(R.id.et_message);
+        etTitle = findViewById(R.id.etTitle);
+        etDescription = findViewById(R.id.etDescription);
+
+        // Gets all necessary fields to set timer for given time on given day
+        c = Calendar.getInstance();
+        mMinute = c.get(Calendar.MINUTE);
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+        mMonth = c.get(Calendar.MONTH);
+        mYear = c.get(Calendar.YEAR);
+    }
+
+    public void setTime(View view) {
+        DialogFragment timeDialog = new com.github.makosful.todo.bll.notifications.TimePickerDialog();
+        timeDialog.show(getSupportFragmentManager(), getString(R.string.timeDialog));
     }
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         Log.d("TimePicker", "LOGGING HOUR & MINUTE OF DAY: " + hourOfDay + " | " + minute);
-        c = Calendar.getInstance();
         c.set(Calendar.HOUR_OF_DAY, hourOfDay);
         c.set(Calendar.MINUTE, minute);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, NotificationReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
-
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+    }
+
+    public void setDate(View view) {
+        DialogFragment dateDialog = new com.github.makosful.todo.bll.notifications.DatePickerDialog();
+        dateDialog.show(getSupportFragmentManager(), getString(R.string.timeDialog));
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Log.d("DatePicker", "LOGGING DAY MONTH YEAR: " + year + " | " + month + " | " + dayOfMonth);
+        mYear = year;
+        mMonth = month;
+        mDay = dayOfMonth;
+    }
+
+    public void addPicture(View view) {
+
     }
 
     public void sendImportantNotice(View view) {
@@ -84,9 +113,6 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
             return;
         }
 
-        DialogFragment timeDialog = new com.github.makosful.todo.bll.notifications.TimePickerDialog();
-        timeDialog.show(getSupportFragmentManager(), getString(R.string.timeDialog));
-
         /*
         When we tap the notification we open the details activity for this specific task (not to be confused with android Task)
         and we close the notification afterwards. In order to not launch activity upon activity we will make a stack builder
@@ -104,15 +130,15 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
         If a user has done a task simply by remembering to do it, but have forgotten to mark it as finished in the app.
         */
         Intent bI = new Intent(this, NotificationReceiver.class);
-        bI.putExtra("toastMsg", et_message.getText().toString());
+        bI.putExtra("toastMsg", etDescription.getText().toString());
         PendingIntent aI = PendingIntent.getBroadcast(this, 0, bI, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.bossrob);
 
         Notification notice = new NotificationCompat.Builder(this, CHANNEL_2_ID)
                 .setSmallIcon(R.drawable.ic_notifications_important) // Icon that is displayed
-                .setContentTitle(et_title.getText().toString()) // TITLE text
-                .setContentText(et_message.getText().toString()) // BODY text
+                .setContentTitle(etTitle.getText().toString()) // TITLE text
+                .setContentText(etDescription.getText().toString()) // BODY text
                 .setLargeIcon(bmp) // adds the "large" icon, when we expand the notification
                 .setStyle(new android.support.v4.media.app.NotificationCompat.MediaStyle())
                 .setPriority(NotificationCompat.PRIORITY_HIGH) // priority to help android decide the importance
@@ -132,13 +158,13 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
         PendingIntent contentI = sB.getPendingIntent(9, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent bI = new Intent(this, NotificationReceiver.class);
-        bI.putExtra("toastMsg", et_message.getText().toString());
+        bI.putExtra("toastMsg", etDescription.getText().toString());
         PendingIntent aI = PendingIntent.getBroadcast(this, 0, bI, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notice = new NotificationCompat.Builder(this, CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_notifications_default)
-                .setContentTitle(et_title.getText().toString())
-                .setContentText(et_message.getText().toString())
+                .setContentTitle(etTitle.getText().toString())
+                .setContentText(etDescription.getText().toString())
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setCategory(NotificationCompat.CATEGORY_REMINDER)
                 .setContentIntent(contentI)
