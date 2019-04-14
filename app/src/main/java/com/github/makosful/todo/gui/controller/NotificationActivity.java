@@ -23,6 +23,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
@@ -40,6 +41,7 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
     private NotificationManagerCompat notificationManager;
     private EditText etTitle;
     private EditText etDescription;
+    private Button btnAddActivity;
     private Calendar c;
     private Date mDate;
     private int noticeId = 1;
@@ -53,6 +55,14 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
         notificationManager = NotificationManagerCompat.from(this);
         etTitle = findViewById(R.id.etTitle);
         etDescription = findViewById(R.id.etDescription);
+        btnAddActivity = findViewById(R.id.btnAddActivity);
+        btnAddActivity.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                sendImportantNotice(v);
+                return true;
+            }
+        });
 
         // Gets all necessary fields to set timer for the given time
         c = Calendar.getInstance();
@@ -98,6 +108,25 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
     }
 
     public void AddActivity(View view) {
+        /*
+        Check if user has disabled notifications for this APP, which is probably not intentional.
+         */
+        if (!notificationManager.areNotificationsEnabled()) {
+            openSettings();
+            Toast.makeText(this, "Enable notifications", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        /*
+        Check if user has disabled this specific notifications CHANNEL which is probably not intentional
+        REQUIRES API 26
+         */
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && isNoticeChannelMuted(CHANNEL_2_ID)) {
+            openChannelSettings(CHANNEL_2_ID);
+            Toast.makeText(this, "Enable notifications", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, NotificationReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
@@ -113,53 +142,36 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
 
     public void sendImportantNotice(View view) {
         /*
-        Check if user has disabled notifications for this APP, which is probably not intentional.
-         */
-        if (!notificationManager.areNotificationsEnabled()) {
-            openSettings();
-            return;
-        }
-
-        /*
-        Check if user has disabled this specific notifications CHANNEL which is probably not intentional
-        REQUIRES API 26
-         */
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && isNoticeChannelMuted(CHANNEL_2_ID)) {
-            openChannelSettings(CHANNEL_2_ID);
-            return;
-        }
-
-        /*
         When we tap the notification we open the details activity for this specific task (not to be confused with android Task)
         and we close the notification afterwards. In order to not launch activity upon activity we will make a stack builder
-        so that we can simply add this fragment on top of our already existing task, rather than pile up activities.*/
+        so that we can simply add this fragment on top of our already existing task, rather than pile up activities.
+
         Intent dI = new Intent(this, TodoDetailActivity.class);
         TaskStackBuilder sB = TaskStackBuilder.create(this);
         sB.addNextIntentWithParentStack(dI);
         PendingIntent contentI = sB.getPendingIntent(9, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        /*
         This adds the bottom part of our notification, allowing us to perform certain actions when pressed. In this example
         all we do is make a toast, however this will most likely be used to "auto ocmplete" the task without having to enter the
         GUI for the app itself, allowing for easy access of the user.
         A scenario where this is intended to directly solve is:
         If a user has done a task simply by remembering to do it, but have forgotten to mark it as finished in the app.
-        */
+
         Intent bI = new Intent(this, NotificationReceiver.class);
         bI.putExtra("toastMsg", etDescription.getText().toString());
         PendingIntent aI = PendingIntent.getBroadcast(this, 0, bI, PendingIntent.FLAG_UPDATE_CURRENT);
-
+        */
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.bossrob);
 
         Notification notice = new NotificationCompat.Builder(this, CHANNEL_2_ID)
                 .setSmallIcon(R.drawable.ic_notifications_important) // Icon that is displayed
-                .setContentTitle(etTitle.getText().toString()) // TITLE text
-                .setContentText(etDescription.getText().toString()) // BODY text
+                .setContentTitle("Hi there, I'm Bob Ross") // TITLE text
+                .setContentText("I like to talk to trees and animals.") // BODY text
                 .setLargeIcon(bmp) // adds the "large" icon, when we expand the notification
                 .setStyle(new android.support.v4.media.app.NotificationCompat.MediaStyle())
                 .setPriority(NotificationCompat.PRIORITY_HIGH) // priority to help android decide the importance
                 .setCategory(NotificationCompat.CATEGORY_REMINDER) // category to help Android decide the type of notice
-                .setContentIntent(contentI) //opens intent when pressed
+                // .setContentIntent(contentI) //opens intent when pressed
                 .setOnlyAlertOnce(false) // disables the app from not popping up every time.
                 .setAutoCancel(true) //Allows to dismiss notification by tapping
                 .build();
