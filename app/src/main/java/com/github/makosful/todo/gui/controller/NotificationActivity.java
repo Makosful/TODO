@@ -1,11 +1,13 @@
 package com.github.makosful.todo.gui.controller;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,13 +22,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.github.makosful.todo.R;
 import com.github.makosful.todo.bll.notifications.NotificationReceiver;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import static com.github.makosful.todo.bll.notifications.NotificationHelper.CHANNEL_1_ID;
 import static com.github.makosful.todo.bll.notifications.NotificationHelper.CHANNEL_2_ID;
@@ -36,7 +40,8 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
     private EditText et_title;
     private EditText et_message;
     private int noticeId = 1;
-
+    private Calendar c;
+    private Date date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,12 +55,18 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         Log.d("TimePicker", "LOGGING HOUR & MINUTE OF DAY: " + hourOfDay + " | " + minute);
+        c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        c.set(Calendar.MINUTE, minute);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, NotificationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
     }
 
     public void sendImportantNotice(View view) {
-        DialogFragment timeDialog = new com.github.makosful.todo.bll.notifications.TimePickerDialog();
-        timeDialog.show(getSupportFragmentManager(), getString(R.string.timeDialog));
-
         /*
         Check if user has disabled notifications for this APP, which is probably not intentional.
          */
@@ -73,13 +84,13 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
             return;
         }
 
-
+        DialogFragment timeDialog = new com.github.makosful.todo.bll.notifications.TimePickerDialog();
+        timeDialog.show(getSupportFragmentManager(), getString(R.string.timeDialog));
 
         /*
         When we tap the notification we open the details activity for this specific task (not to be confused with android Task)
         and we close the notification afterwards. In order to not launch activity upon activity we will make a stack builder
-        so that we can simply add this fragment on top of our already existing task, rather than pile up activities.
-         */
+        so that we can simply add this fragment on top of our already existing task, rather than pile up activities.*/
         Intent dI = new Intent(this, TodoDetailActivity.class);
         TaskStackBuilder sB = TaskStackBuilder.create(this);
         sB.addNextIntentWithParentStack(dI);
@@ -91,7 +102,7 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
         GUI for the app itself, allowing for easy access of the user.
         A scenario where this is intended to directly solve is:
         If a user has done a task simply by remembering to do it, but have forgotten to mark it as finished in the app.
-         */
+        */
         Intent bI = new Intent(this, NotificationReceiver.class);
         bI.putExtra("toastMsg", et_message.getText().toString());
         PendingIntent aI = PendingIntent.getBroadcast(this, 0, bI, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -107,12 +118,12 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
                 .setPriority(NotificationCompat.PRIORITY_HIGH) // priority to help android decide the importance
                 .setCategory(NotificationCompat.CATEGORY_REMINDER) // category to help Android decide the type of notice
                 .setContentIntent(contentI) //opens intent when pressed
-                .addAction(R.mipmap.ic_launcher_round, getString(R.string.details), aI) //adds action button with intent from above.
                 .setOnlyAlertOnce(false) // disables the app from not popping up every time.
                 .setAutoCancel(true) //Allows to dismiss notification by tapping
                 .build();
 
         notificationManager.notify(noticeId++, notice);
+
     }
 
     public void sendDefaultNotice(View view) {

@@ -1,15 +1,14 @@
 package com.github.makosful.todo.bll.notifications;
 
-import android.annotation.TargetApi;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
-
 import com.github.makosful.todo.R;
 
 public class NotificationHelper extends ContextWrapper {
@@ -22,11 +21,12 @@ public class NotificationHelper extends ContextWrapper {
     public static final String CHANNEL_1_ID = "Main notice channel";
     public static final String CHANNEL_2_ID = "Important notice channel";
     private NotificationManager noticeManager;
-
+    private Bitmap bmp;
 
     public NotificationHelper(Context base) {
         super(base);
         createNotificationChannels();
+        bmp = BitmapFactory.decodeResource(getResources(), R.drawable.bossrob);
     }
 
     public NotificationManager getManager() {
@@ -62,11 +62,15 @@ public class NotificationHelper extends ContextWrapper {
 
     public NotificationCompat.Builder getImportantNotification() {
         return new NotificationCompat.Builder(getApplicationContext(), CHANNEL_2_ID)
-                .setContentTitle(getString(R.string.importantNotice)) // TODO Grab Activity to set title, text etc.
-                .setContentText("Description")
-                .setVibrate(new long[] {0, 500, 250, 500, 250, 500}) // sets the vibration pattern
-                .setLights(Color.RED, 500, 750)
-                .setSmallIcon(R.drawable.ic_notifications_important); // sets the icon of the notification
+                .setSmallIcon(R.drawable.ic_notifications_important) // Icon that is displayed
+                .setContentTitle(getString(R.string.importantNotice)) // TITLE text
+                .setContentText("Description") // BODY text
+                .setLargeIcon(bmp) // adds the "large" icon, when we expand the notification
+                .setStyle(new android.support.v4.media.app.NotificationCompat.MediaStyle())
+                .setPriority(NotificationCompat.PRIORITY_HIGH) // priority to help android decide the importance
+                .setCategory(NotificationCompat.CATEGORY_REMINDER) // category to help Android decide the type of notice
+                .setOnlyAlertOnce(false) // disables the app from not popping up every time.
+                .setAutoCancel(true); //Allows to dismiss notification by tapping
     }
 
     private void createDefaultChannel() {
