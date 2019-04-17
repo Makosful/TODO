@@ -14,13 +14,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,7 +30,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import com.github.makosful.todo.R;
 import com.github.makosful.todo.bll.notifications.NotificationReceiver;
-
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -41,7 +40,6 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
     private NotificationManagerCompat notificationManager;
     private EditText etTitle;
     private EditText etDescription;
-    private Button btnAddActivity;
     private Calendar c;
     private Date mDate;
     private int noticeId = 1;
@@ -55,7 +53,7 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
         notificationManager = NotificationManagerCompat.from(this);
         etTitle = findViewById(R.id.etTitle);
         etDescription = findViewById(R.id.etDescription);
-        btnAddActivity = findViewById(R.id.btnAddActivity);
+        Button btnAddActivity = findViewById(R.id.btnAddActivity);
         btnAddActivity.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -98,7 +96,6 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
         mYear = year;
         mMonth = month;
         mDay = dayOfMonth;
-
         mDate = c.getTime();
     }
 
@@ -112,8 +109,8 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
         Check if user has disabled notifications for this APP, which is probably not intentional.
          */
         if (!notificationManager.areNotificationsEnabled()) {
-            openSettings();
             Toast.makeText(this, "Enable notifications", Toast.LENGTH_SHORT).show();
+            openSettings();
             return;
         }
 
@@ -122,11 +119,11 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
         REQUIRES API 26
          */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && isNoticeChannelMuted(CHANNEL_2_ID)) {
-            openChannelSettings(CHANNEL_2_ID);
             Toast.makeText(this, "Enable notifications", Toast.LENGTH_SHORT).show();
+            openChannelSettings(CHANNEL_2_ID);
             return;
         }
-        
+
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, NotificationReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
@@ -179,6 +176,7 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
         notificationManager.notify(noticeId++, notice);
     }
 
+    /* TODO Remove this later on. Template for now.
     public void sendDefaultNotice(View view) {
         Intent dI = new Intent(this, TodoDetailActivity.class);
         TaskStackBuilder sB = TaskStackBuilder.create(this);
@@ -202,7 +200,7 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
                 .build();
 
         notificationManager.notify(noticeId++, notice);
-    }
+    }*/
 
     /**
      * Opens the settings tab for our application. The way we do this is feed android our package name
@@ -222,6 +220,10 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
         }
     }
 
+    /**
+     * Opens the settings panel for the specific channel given.
+     * @param chanId .
+     */
     @RequiresApi(26)
     private void openChannelSettings(String chanId) {
         Intent i = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
@@ -231,7 +233,7 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
     }
 
     /**
-     *
+     * Returns a boolean for if the given channel is muted or not.
      * @param chanId .
      * @return .
      */
