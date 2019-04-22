@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".gui.controller.NotificationActivity"/>
+        <activity android:name=".gui.controller.AddActivity"/>
         <activity android:name=".gui.controller.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,10 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".gui.controller.TodoDetailActivity" />
+        <activity android:name=".gui.controller.DetailActivity" />
         <activity android:name=".gui.controller.TodoUpdateActivity" />
-        <activity android:name=".gui.controller.TodoAddActivity" />
-
         <receiver android:name=".bll.notifications.NotificationReceiver"/>
     </application>
 

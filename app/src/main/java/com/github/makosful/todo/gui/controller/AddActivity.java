@@ -6,7 +6,6 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -26,22 +25,26 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import com.github.makosful.todo.R;
 import com.github.makosful.todo.bll.notifications.NotificationReceiver;
 import java.text.DateFormat;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import static com.github.makosful.todo.bll.notifications.NotificationHelper.CHANNEL_1_ID;
 import static com.github.makosful.todo.bll.notifications.NotificationHelper.CHANNEL_2_ID;
 
-public class NotificationActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
+public class AddActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
     private NotificationManagerCompat notificationManager;
-    private EditText etTitle;
-    private EditText etDescription;
+    private EditText etTitle, etDescription;
+    private TextView tvPriority, tvDate, tvTime;
     private Calendar c;
     private Date mDate;
+    private String mRepeat;
     private int noticeId = 1;
     private int mMinute, mHour, mDay, mMonth, mYear;
 
@@ -53,7 +56,13 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
         notificationManager = NotificationManagerCompat.from(this);
         etTitle = findViewById(R.id.etTitle);
         etDescription = findViewById(R.id.etDescription);
+        tvTime = findViewById(R.id.tvTime);
+        tvDate = findViewById(R.id.tvDate);
+        tvPriority = findViewById(R.id.tvPriority);
+        // Set default value
+        tvPriority.setText(R.string.unimportant);
         Button btnAddActivity = findViewById(R.id.btnAddActivity);
+        // Easter Egg
         btnAddActivity.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -83,6 +92,11 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
         c.set(Calendar.MINUTE, minute);
 
         mDate = c.getTime();
+
+        // To format the date to only include the time as well as timezone rather than full on date.
+        SimpleDateFormat formatter= new SimpleDateFormat("HH:mm:ss z");
+
+        tvTime.setText(formatter.format(mDate));
     }
 
     public void setDate(View view) {
@@ -97,6 +111,10 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
         mMonth = month;
         mDay = dayOfMonth;
         mDate = c.getTime();
+
+        SimpleDateFormat formatter= new SimpleDateFormat("dd MMMM yyyy");
+
+        tvDate.setText(formatter.format(mDate));
     }
 
     public void addPicture(View view) {
@@ -104,7 +122,7 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
         Toast.makeText(this, "Not added yet.", Toast.LENGTH_SHORT).show();
     }
 
-    public void AddActivity(View view) {
+    public void addActivity(View view) {
         /*
         Check if user has disabled notifications for this APP, which is probably not intentional.
          */
@@ -118,9 +136,9 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
         Check if user has disabled this specific notifications CHANNEL which is probably not intentional
         REQUIRES API 26
          */
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && isNoticeChannelMuted(CHANNEL_2_ID)) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && isNoticeChannelMuted()) {
             Toast.makeText(this, "Enable notifications", Toast.LENGTH_SHORT).show();
-            openChannelSettings(CHANNEL_2_ID);
+            openChannelSettings();
             return;
         }
 
@@ -222,25 +240,34 @@ public class NotificationActivity extends AppCompatActivity implements TimePicke
 
     /**
      * Opens the settings panel for the specific channel given.
-     * @param chanId .
      */
     @RequiresApi(26)
-    private void openChannelSettings(String chanId) {
+    private void openChannelSettings() {
         Intent i = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
         i.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
-        i.putExtra(Settings.EXTRA_CHANNEL_ID, chanId);
+        i.putExtra(Settings.EXTRA_CHANNEL_ID, com.github.makosful.todo.bll.notifications.NotificationHelper.CHANNEL_2_ID);
         startActivity(i);
     }
 
     /**
      * Returns a boolean for if the given channel is muted or not.
-     * @param chanId .
      * @return .
      */
     @RequiresApi(26)
-    private boolean isNoticeChannelMuted(String chanId) {
+    private boolean isNoticeChannelMuted() {
         NotificationManager nM = getSystemService(NotificationManager.class);
-        NotificationChannel nC = nM.getNotificationChannel(chanId);
+        NotificationChannel nC = nM.getNotificationChannel(com.github.makosful.todo.bll.notifications.NotificationHelper.CHANNEL_2_ID);
         return nC != null && nC.getImportance() == NotificationManager.IMPORTANCE_NONE;
+    }
+
+    public void onSwitchRepeat(View view) {
+        boolean on = ((Switch) view).isChecked();
+        if (on) {
+            mRepeat = "on";
+            tvPriority.setText(R.string.important);
+        } else {
+            mRepeat = "off";
+            tvPriority.setText(R.string.unimportant);
+        }
     }
 }
