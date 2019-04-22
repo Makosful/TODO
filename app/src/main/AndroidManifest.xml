@@ -22,7 +22,6 @@
         <activity android:name=".gui.controller.TodoDetailActivity" />
         <activity android:name=".gui.controller.TodoUpdateActivity" />
         <activity android:name=".gui.controller.TodoAddActivity" />
-        <activity android:name=".gui.controller.TodoListActivity" />
 
         <receiver android:name=".bll.notifications.NotificationReceiver"/>
     </application>
