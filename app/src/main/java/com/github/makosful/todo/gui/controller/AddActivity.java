@@ -112,6 +112,7 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
         mDay = dayOfMonth;
         mDate = c.getTime();
 
+        // To format the date to only include the date in the format we wish for. Format: 01 january 2019
         SimpleDateFormat formatter= new SimpleDateFormat("dd MMMM yyyy");
 
         tvDate.setText(formatter.format(mDate));
