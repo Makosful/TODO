@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".gui.controller.DetailActivity" />
+        <activity android:name=".gui.controller.TodoDetailActivity" />
         <activity android:name=".gui.controller.TodoUpdateActivity" />
         <receiver android:name=".bll.notifications.NotificationReceiver"/>
     </application>

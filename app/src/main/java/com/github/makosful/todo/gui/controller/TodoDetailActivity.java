@@ -1,18 +1,17 @@
 package com.github.makosful.todo.gui.controller;
 
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.util.Log;
 
 import com.github.makosful.todo.Common;
 import com.github.makosful.todo.R;
 import com.github.makosful.todo.be.Todo;
 import com.github.makosful.todo.gui.model.MainModel;
-
-import java.util.Objects;
 
 public class TodoDetailActivity extends AppCompatActivity {
     private static final String TAG = "TodoDetailActivity";
@@ -37,8 +36,11 @@ public class TodoDetailActivity extends AppCompatActivity {
         this.iv_image = findViewById(R.id.iv_todo_detail_image);
 
         int id = getIntent().getExtras().getInt(Common.EXTRA_DATA_TODO_ID);
-        // TODO get Todo entity from model
 
+        //  gets the Todo entity from model
+        Log.d(TAG, "Getting the selected Todo Item from the model");
+
+        todo = model.getTodo(id);
         updateViews();
     }
 
