@@ -32,7 +32,6 @@ import android.widget.Toast;
 import com.github.makosful.todo.R;
 import com.github.makosful.todo.bll.notifications.NotificationReceiver;
 import java.text.DateFormat;
-import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
