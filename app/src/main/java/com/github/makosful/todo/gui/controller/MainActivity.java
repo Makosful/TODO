@@ -99,7 +99,14 @@ public class MainActivity extends AppCompatActivity {
             todoViewHolder.tv_Date_And_Time.setText(todo.getDateAndTime().toString());
             todoViewHolder.tv_Importance.setText(todo.getImportance());
             todoViewHolder.iv_Thumbnail.setImageURI(Uri.parse(todo.getThumbnailUrl()));
-            todoViewHolder.iv_Icon.setImageURI(Uri.parse(todo.getIconUrl()));
+
+            //Checks if iconUrl is null, if not sets the image.
+            if (todo.getIconUrl() != null)
+            {todoViewHolder.iv_Icon.setImageURI(Uri.parse(todo.getIconUrl())); }
+
+            //If null it logs that there is a iconUrl set to null, which would result in a crash.
+            else
+                {Log.d(TAG, "IconURL is set to null which would result in a crash.");}
 
             todoViewHolder.parent.setOnClickListener(new View.OnClickListener() {
                 @Override

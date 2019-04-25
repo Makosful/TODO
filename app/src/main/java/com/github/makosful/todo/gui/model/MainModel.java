@@ -50,47 +50,55 @@ public class MainModel {
         Todo todo = new Todo("1", new Date());
         todo.setId(i++);
         todo.setThumbnailUrl("");
+        todo.setIconUrl("");
         this.todoList.add(todo);
 
         todo = new Todo("2", new Date());
         todo.setId(i++);
         todo.setThumbnailUrl("");
+        todo.setIconUrl("");
         this.todoList.add(todo);
 
         todo = new Todo("3", new Date());
         todo.setId(i++);
         todo.setThumbnailUrl("");
+        todo.setIconUrl("");
         this.todoList.add(todo);
 
         todo = new Todo("4", new Date());
         todo.setId(i++);
         todo.setThumbnailUrl("");
+        todo.setIconUrl("");
         this.todoList.add(todo);
 
         todo = new Todo("5", new Date());
         todo.setId(i++);
         todo.setThumbnailUrl("");
+        todo.setIconUrl("");
         this.todoList.add(todo);
 
         todo = new Todo("6", new Date());
         todo.setId(i++);
         todo.setThumbnailUrl("");
+        todo.setIconUrl("");
         this.todoList.add(todo);
 
         todo = new Todo("7",new Date());
         todo.setId(i++);
         todo.setThumbnailUrl("");
+        todo.setIconUrl("");
         this.todoList.add(todo);
 
         todo = new Todo("8", new Date());
         todo.setId(i++);
-        todo.setTitle("Eighth");
         todo.setThumbnailUrl("");
+        todo.setIconUrl("");
         this.todoList.add(todo);
 
         todo = new Todo("9", new Date());
         todo.setId(i++);
         todo.setThumbnailUrl("");
+        todo.setIconUrl("");
         this.todoList.add(todo);
     }
 }
