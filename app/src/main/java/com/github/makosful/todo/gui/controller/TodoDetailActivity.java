@@ -20,7 +20,7 @@ public class TodoDetailActivity extends AppCompatActivity {
 
     private TextView tv_title;
     private ImageView iv_image;
-    private TextView tv_notes;
+    private TextView tv_description;
 
     private Todo todo;
 
@@ -32,7 +32,7 @@ public class TodoDetailActivity extends AppCompatActivity {
         this.model = new MainModel(this);
 
         this.tv_title = findViewById(R.id.tv_todo_detail_title);
-        this.tv_notes = findViewById(R.id.tv_todo_detail_notes);
+        this.tv_description = findViewById(R.id.tv_detail_description);
         this.iv_image = findViewById(R.id.iv_todo_detail_image);
 
         int id = getIntent().getExtras().getInt(Common.EXTRA_DATA_TODO_ID);
@@ -48,10 +48,10 @@ public class TodoDetailActivity extends AppCompatActivity {
         String title = this.todo.getTitle();
         tv_title.setText(title);
 
-        String notes = this.todo.getNotes();
-        tv_notes.setText(notes);
+        String notes = this.todo.getDateAndTime().toString();
+        tv_description.setText(notes);
 
-        String url = this.todo.getImageUrl();
+        String url = this.todo.getThumbnailUrl();
         if (url == null || url.isEmpty()) {
             iv_image.setVisibility(View.INVISIBLE);
         } else {

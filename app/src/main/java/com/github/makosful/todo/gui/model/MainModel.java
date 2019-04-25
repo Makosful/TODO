@@ -1,11 +1,10 @@
 package com.github.makosful.todo.gui.model;
 
 import android.content.Context;
-
 import com.github.makosful.todo.be.Todo;
 import com.github.makosful.todo.bll.BusinessLayerFacade;
 import com.github.makosful.todo.bll.IBLL;
-
+import java.util.Date;
 import java.util.List;
 
 public class MainModel {
@@ -14,18 +13,14 @@ public class MainModel {
      */
     private IBLL logic;
 
-    /**
-     * The context in which this model class lives
-     */
-    private Context context;
-
     // Instance variables
     private List<Todo> todoList;
+    private Context context;
 
     public MainModel(Context context) {
         this.logic = new BusinessLayerFacade();
+        // The context in which this model class lives
         this.context = context;
-
         this.todoList = this.logic.getTodoStorage().readAll();
     }
 
@@ -42,22 +37,9 @@ public class MainModel {
      * @param id The Id given to find the wanted Todo Item
      * @return Returns the item with the given Id from the Todo Items List
      */
-    public Todo getTodo(int id) {return this.logic.getTodoStorage().read(id);}
-
-   /*
-    public void seedStorage() {
-        this.todoList.add(new Todo("First"));
-        this.todoList.add(new Todo("Second"));
-        this.todoList.add(new Todo("Third"));
-        this.todoList.add(new Todo("Fourth"));
-        this.todoList.add(new Todo("Fifth"));
-        this.todoList.add(new Todo("Sixth"));
-        this.todoList.add(new Todo("Seventh"));
-        this.todoList.add(new Todo("Eighth"));
-        this.todoList.add(new Todo("Ninth"));
+    public Todo getTodo(int id) {
+        return this.logic.getTodoStorage().read(id);
     }
-     */
-
 
     public void seedStorage() {
 
@@ -65,67 +47,50 @@ public class MainModel {
         todoList.clear();
 
         int i = 0;
-        Todo todo = new Todo("Title");
+        Todo todo = new Todo("1", new Date());
         todo.setId(i++);
-        todo.setTitle("First");
-        todo.setNotes(("Need more food"));
-        todo.setImageUrl("");
+        todo.setThumbnailUrl("");
         this.todoList.add(todo);
 
-        todo = new Todo("Second");
+        todo = new Todo("2", new Date());
         todo.setId(i++);
-        todo.setTitle("Second");
-        todo.setNotes(("Need more drinks"));
-        todo.setImageUrl("");
+        todo.setThumbnailUrl("");
         this.todoList.add(todo);
 
-        todo = new Todo("Third");
+        todo = new Todo("3", new Date());
         todo.setId(i++);
-        todo.setTitle("Third");
-        todo.setNotes(("Need more toilet paper"));
-        todo.setImageUrl("");
+        todo.setThumbnailUrl("");
         this.todoList.add(todo);
 
-        todo = new Todo("Fourth");
+        todo = new Todo("4", new Date());
         todo.setId(i++);
-        todo.setTitle("Fourth");
-        todo.setNotes(("Need more soap"));
-        todo.setImageUrl("");
+        todo.setThumbnailUrl("");
         this.todoList.add(todo);
 
-        todo = new Todo("Fifth");
+        todo = new Todo("5", new Date());
         todo.setId(i++);
-        todo.setTitle("Fifth");
-        todo.setNotes(("Need more coffee"));
-        todo.setImageUrl("");
+        todo.setThumbnailUrl("");
         this.todoList.add(todo);
 
-        todo = new Todo("Sixth");
+        todo = new Todo("6", new Date());
         todo.setId(i++);
-        todo.setTitle("Sixth");
-        todo.setNotes(("Need more extras"));
-        todo.setImageUrl("");
+        todo.setThumbnailUrl("");
         this.todoList.add(todo);
 
-        todo = new Todo("Seventh");
+        todo = new Todo("7",new Date());
         todo.setId(i++);
-        todo.setTitle("Seventh");
-        todo.setNotes(("Need more stuff"));
-        todo.setImageUrl("");
+        todo.setThumbnailUrl("");
         this.todoList.add(todo);
 
-        todo = new Todo("Eighth");
+        todo = new Todo("8", new Date());
         todo.setId(i++);
         todo.setTitle("Eighth");
-        todo.setNotes(("Need more cat food"));
-        todo.setImageUrl("");
+        todo.setThumbnailUrl("");
         this.todoList.add(todo);
 
-        todo = new Todo("Ninth");
+        todo = new Todo("9", new Date());
         todo.setId(i++);
-        todo.setTitle("Ninth");
-        todo.setNotes(("Need more dog food"));
-        todo.setImageUrl("");
+        todo.setThumbnailUrl("");
         this.todoList.add(todo);
     }
 }

@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/adapter_item_parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground">
 
     <ImageView
-        android:id="@+id/thumbnail_image"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:id="@+id/notice_thumbnail"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        android:contentDescription="@string/noticeThumbnailDescription"
         android:src="@drawable/questionmark" />
 
     <LinearLayout
@@ -20,13 +22,13 @@
         android:layout_centerVertical="true"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
-        android:layout_toStartOf="@+id/active_image"
-        android:layout_toEndOf="@id/thumbnail_image"
+        android:layout_toStartOf="@+id/notice_icon"
+        android:layout_toEndOf="@id/notice_thumbnail"
         android:orientation="vertical"
         android:padding="4dp">
 
         <TextView
-            android:id="@+id/recycle_title"
+            android:id="@+id/notice_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -35,7 +37,7 @@
             tools:text="Title here..." />
 
         <TextView
-            android:id="@+id/recycle_date_time"
+            android:id="@+id/notice_date_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
@@ -44,7 +46,7 @@
             tools:text="Date and Time stamp" />
 
         <TextView
-            android:id="@+id/importance"
+            android:id="@+id/notice_importance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
@@ -52,16 +54,27 @@
             android:textSize="15sp"
             tools:text="Importance of reminder" />
 
+        <TextView
+            android:id="@+id/notice_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:maxLines="2"
+            android:singleLine="true"
+            android:textSize="15sp"
+            tools:text="Description of reminder... \n2 lines max" />
+
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/active_image"
+        android:id="@+id/notice_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:contentDescription="@string/noticeIconDescription"
         android:src="@drawable/questionmark" />
 
 </RelativeLayout>

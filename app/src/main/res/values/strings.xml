@@ -15,4 +15,6 @@
     <string name="important">Important</string>
     <string name="unimportant">Default</string>
     <string name="add">Add Activity</string>
+    <string name="noticeIconDescription">The icon which indicates whether the notification is active or inactive</string>
+    <string name="noticeThumbnailDescription">The thumbnail of the picture taken associated with the alarm</string>
 </resources>

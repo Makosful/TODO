@@ -3,8 +3,8 @@ package com.github.makosful.todo.gui.controller;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,13 +13,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.github.makosful.todo.Common;
 import com.github.makosful.todo.R;
 import com.github.makosful.todo.be.Todo;
 import com.github.makosful.todo.gui.model.MainModel;
-
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -94,8 +94,12 @@ public class MainActivity extends AppCompatActivity {
 
             final Todo todo = this.todoList.get(i);
 
-            Log.d(TAG, "onBindViewHolder: Sets the title of the current TODO item");
-            todoViewHolder.tv_title.setText(todo.getTitle());
+            Log.d(TAG, "onBindViewHolder: Sets the contents of the current TODO item");
+            todoViewHolder.tv_Title.setText(todo.getTitle());
+            todoViewHolder.tv_Date_And_Time.setText(todo.getDateAndTime().toString());
+            todoViewHolder.tv_Importance.setText(todo.getImportance());
+            todoViewHolder.iv_Thumbnail.setImageURI(Uri.parse(todo.getThumbnailUrl()));
+            todoViewHolder.iv_Icon.setImageURI(Uri.parse(todo.getIconUrl()));
 
             todoViewHolder.parent.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -143,8 +147,9 @@ public class MainActivity extends AppCompatActivity {
     private class TodoViewHolder extends RecyclerView.ViewHolder {
         private static final String TAG = "TodoViewHolder";
 
-        private TextView tv_title;
-        private ConstraintLayout parent;
+        private TextView tv_Title, tv_Date_And_Time, tv_Importance;
+        private ImageView iv_Thumbnail, iv_Icon;
+        private RelativeLayout parent;
 
         /**
          * Package-private constructor.
@@ -156,8 +161,11 @@ public class MainActivity extends AppCompatActivity {
             super(itemView);
             Log.d(TAG, "Constructor: Super has been called");
 
-            this.tv_title = itemView.findViewById(R.id.tv_adapter_todo_title);
-            Log.d(TAG, "TodoViewHolder: Title has been found");
+            this.tv_Title = itemView.findViewById(R.id.notice_title);
+            this.tv_Date_And_Time = itemView.findViewById(R.id.notice_date_time);
+            this.tv_Importance = itemView.findViewById(R.id.notice_importance);
+            this.iv_Thumbnail = itemView.findViewById(R.id.notice_thumbnail);
+            this.iv_Icon = itemView.findViewById(R.id.notice_icon);
             this.parent = itemView.findViewById(R.id.adapter_item_parent);
             Log.d(TAG, "TodoViewHolder: Parent View has been found");
         }
