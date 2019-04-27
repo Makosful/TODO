@@ -10,7 +10,7 @@ public class NotificationReceiver extends BroadcastReceiver {
     /***
      * TODO Action when tapping notification (Toast atm)
      * This is what happens when we decide to press the activity, will be changed to display
-     * TodoDetailActivity for this specific task (if we make it that far)
+     * DetailActivity for this specific task (if we make it that far)
      * @param context .
      * @param intent .
      */

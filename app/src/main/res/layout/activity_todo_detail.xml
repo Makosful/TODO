@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gui.controller.TodoDetailActivity">
+    tools:context=".gui.controller.DetailActivity">
 
     <TextView
         android:id="@+id/tv_todo_detail_title"
