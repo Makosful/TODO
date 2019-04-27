@@ -145,6 +145,7 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, NotificationReceiver.class);
+        // TODO unique request codes maybe?
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
 
         if (c.before(Calendar.getInstance())) {
@@ -152,7 +153,7 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
             return;
         }
 
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
         Toast.makeText(this, "Reminder set for " + DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime()), Toast.LENGTH_SHORT).show();
     }
 
@@ -219,7 +220,8 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
                 .build();
 
         notificationManager.notify(noticeId++, notice);
-    }*/
+    }
+    */
 
     /**
      * Opens the settings tab for our application. The way we do this is feed android our package name

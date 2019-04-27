@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * This class represents a single TODO item in the RecyclerView and holds the related information
+     * This class represents a single to do item in the RecyclerView and holds the related information
      */
     private class TodoViewHolder extends RecyclerView.ViewHolder {
         private static final String TAG = "TodoViewHolder";

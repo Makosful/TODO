@@ -66,8 +66,6 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.NoticeView
         log("Reading notice from position " + position);
         final Notice notice = noticeList.get(position);
 
-        // TODO Finish checking up for things here
-
         try {
             if (notice.getThumbnailUrl() != null) {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), Uri.parse(notice.getThumbnailUrl()));

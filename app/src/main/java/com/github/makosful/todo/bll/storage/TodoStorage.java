@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * This class is responsible for handling any and all validation regarding the act of reading and
- * writing TODO items to and from storage
+ * writing to do items to and from storage
  */
 public class TodoStorage implements IStorage<Notice> {
     /**

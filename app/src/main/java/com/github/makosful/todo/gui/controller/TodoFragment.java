@@ -78,7 +78,7 @@ public class TodoFragment extends Fragment {
     }
 
     /**
-     * Sets the local instance of the TODO entity
+     * Sets the local instance of the to do entity
      * @param notice
      */
     public void setNotice(Notice notice) {
