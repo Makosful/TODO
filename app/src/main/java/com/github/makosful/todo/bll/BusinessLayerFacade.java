@@ -1,6 +1,6 @@
 package com.github.makosful.todo.bll;
 
-import com.github.makosful.todo.be.Todo;
+import com.github.makosful.todo.be.Notice;
 import com.github.makosful.todo.bll.storage.IStorage;
 import com.github.makosful.todo.bll.storage.TodoStorage;
 import com.github.makosful.todo.dal.DataLayerFacade;
@@ -12,7 +12,7 @@ import com.github.makosful.todo.dal.IDAL;
  */
 public class BusinessLayerFacade implements IBLL {
     private IDAL data;
-    private IStorage<Todo> todoStorage;
+    private IStorage<Notice> todoStorage;
 
     public BusinessLayerFacade() {
         // Creates an instance of the Data Layer Facade to pass around
@@ -23,7 +23,7 @@ public class BusinessLayerFacade implements IBLL {
     }
 
     @Override
-    public IStorage<Todo> getTodoStorage() {
+    public IStorage<Notice> getTodoStorage() {
         return this.todoStorage;
     }
 }

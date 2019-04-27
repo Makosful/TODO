@@ -14,16 +14,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.github.makosful.todo.Common;
 import com.github.makosful.todo.R;
-import com.github.makosful.todo.be.Todo;
+import com.github.makosful.todo.be.Notice;
 import com.github.makosful.todo.gui.model.MainModel;
+import com.github.makosful.todo.gui.model.NoticeAdapter;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+    NoticeAdapter adapter;
+    List<Notice> noticeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +48,11 @@ public class MainActivity extends AppCompatActivity {
         // Views
         RecyclerView recyclerView = this.findViewById(R.id.rv_todo_list_list);
 
+        noticeList = model.getNoticeList();
+
         Log.d(TAG, "onCreate: Creating a new TodoAdapter for the RecyclerView");
-        final TodoAdapter adapter = new TodoAdapter(this, model.getTodoList());
+        // final TodoAdapter adapter = new TodoAdapter(this, model.getNoticeList());
+        adapter = new NoticeAdapter(this, noticeList);
         recyclerView.setAdapter(adapter);
 
         // RecyclerView.Fixed Fixed allows for performance optimization.
@@ -59,18 +67,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * This is the adapter class that's responsible for mapping the Todo Business Entity to the RecyclerView
+     * This is the adapter class that's responsible for mapping the Notice Business Entity to the RecyclerView
      */
     private class TodoAdapter extends RecyclerView.Adapter<TodoViewHolder> {
         private static final String TAG = "TodoAdapter";
 
         private final Context context;
-        private final List<Todo> todoList;
+        private final List<Notice> noticeList;
 
-        TodoAdapter(Context context, List<Todo> todoList) {
-            Log.d(TAG, "TodoAdapter() called with: context = [" + context + "], todoList = [" + todoList + "]");
+        TodoAdapter(Context context, List<Notice> noticeList) {
+            Log.d(TAG, "TodoAdapter() called with: context = [" + context + "], noticeList = [" + noticeList + "]");
             this.context = context;
-            this.todoList = todoList;
+            this.noticeList = noticeList;
         }
 
         @NonNull
@@ -92,26 +100,26 @@ public class MainActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull TodoViewHolder todoViewHolder, int i) {
             Log.d(TAG, "onBindViewHolder() called with: todoViewHolder = [" + todoViewHolder + "], i = [" + i + "]");
 
-            final Todo todo = this.todoList.get(i);
+            final Notice notice = this.noticeList.get(i);
 
             Log.d(TAG, "onBindViewHolder: Sets the contents of the current TODO item");
-            todoViewHolder.tv_Title.setText(todo.getTitle());
-            todoViewHolder.tv_Date_And_Time.setText(todo.getDateAndTime().toString());
-            todoViewHolder.tv_Importance.setText(todo.getImportance());
-            todoViewHolder.iv_Thumbnail.setImageURI(Uri.parse(todo.getThumbnailUrl()));
+            todoViewHolder.tv_Title.setText(notice.getTitle());
+            todoViewHolder.tv_Date_And_Time.setText(notice.getDateAndTime().toString());
+            todoViewHolder.tv_Importance.setText(notice.getImportance());
+            todoViewHolder.iv_Thumbnail.setImageURI(Uri.parse(notice.getThumbnailUrl()));
 
             //Checks if iconUrl is null, if not sets the image.
-            if (todo.getIconUrl() != null)
-            {todoViewHolder.iv_Icon.setImageURI(Uri.parse(todo.getIconUrl())); }
+            if (notice.getIconUrl() != null)
+            {todoViewHolder.iv_Icon.setImageURI(Uri.parse(notice.getIconUrl())); }
 
             //If null it logs that there is a iconUrl set to null, which would result in a crash.
             else
                 {Log.d(TAG, "IconURL is set to null which would result in a crash.");}
 
-            todoViewHolder.parent.setOnClickListener(new View.OnClickListener() {
+            todoViewHolder.outerParent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    openDetailView(todo.getId());
+                    openDetailView(notice.getId());
                 }
             });
         }
@@ -123,27 +131,27 @@ public class MainActivity extends AppCompatActivity {
          */
         @Override
         public int getItemCount() {
-            final int size = this.todoList.size();
+            final int size = this.noticeList.size();
             Log.d(TAG, "getItemCount: Current item count: " + size);
             return size;
         }
 
         /**
-         * Opens the TodoDetailActivity Activity.
-         * The Todo item contained in the Activity is based on the ID passed in
+         * Opens the DetailActivity Activity.
+         * The Notice item contained in the Activity is based on the ID passed in
          *
-         * @param id The ID of the Todo item to fill the Activity with
+         * @param id The ID of the Notice item to fill the Activity with
          */
         private void openDetailView(int id) {
             Log.d(TAG, "openDetailView() called with: id = [" + id + "]");
 
-            Log.d(TAG, "openDetailView: Creating new Intent for the TodoDetailActivity class");
-            Intent i = new Intent(this.context, TodoDetailActivity.class);
+            Log.d(TAG, "openDetailView: Creating new Intent for the DetailActivity class");
+            Intent i = new Intent(this.context, DetailActivity.class);
 
             Log.d(TAG, "openDetailView: Added the ID to the Intent's extra");
             i.putExtra(Common.EXTRA_DATA_TODO_ID, id);
 
-            Log.d(TAG, "openDetailView: Starts the TodoDetailActivity Activity");
+            Log.d(TAG, "openDetailView: Starts the DetailActivity Activity");
             ((Activity) this.context).startActivityForResult(i, Common.ACTIVITY_REQUEST_CODE_TODO_DETAIL);
         }
     }
@@ -156,7 +164,8 @@ public class MainActivity extends AppCompatActivity {
 
         private TextView tv_Title, tv_Date_And_Time, tv_Importance;
         private ImageView iv_Thumbnail, iv_Icon;
-        private RelativeLayout parent;
+        private RelativeLayout outerParent;
+        private LinearLayout innerParent;
 
         /**
          * Package-private constructor.
@@ -173,7 +182,8 @@ public class MainActivity extends AppCompatActivity {
             this.tv_Importance = itemView.findViewById(R.id.notice_importance);
             this.iv_Thumbnail = itemView.findViewById(R.id.notice_thumbnail);
             this.iv_Icon = itemView.findViewById(R.id.notice_icon);
-            this.parent = itemView.findViewById(R.id.adapter_item_parent);
+            this.outerParent = itemView.findViewById(R.id.outer_parent);
+            this.innerParent = itemView.findViewById(R.id.inner_parent);
             Log.d(TAG, "TodoViewHolder: Parent View has been found");
         }
     }

@@ -1,6 +1,6 @@
 package com.github.makosful.todo.dal;
 
-import com.github.makosful.todo.be.Todo;
+import com.github.makosful.todo.be.Notice;
 import com.github.makosful.todo.dal.storage.IStorage;
 
 /**
@@ -15,5 +15,5 @@ public interface IDAL {
      * Gets the local instance of the TODO Storage handler
      * @return Returns an instance of the TODO Storage
      */
-    IStorage<Todo> getTodoStorage();
+    IStorage<Notice> getTodoStorage();
 }

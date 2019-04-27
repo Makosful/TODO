@@ -29,6 +29,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
 import com.github.makosful.todo.R;
 import com.github.makosful.todo.bll.notifications.NotificationReceiver;
 import java.text.DateFormat;
@@ -161,7 +162,7 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
         and we close the notification afterwards. In order to not launch activity upon activity we will make a stack builder
         so that we can simply add this fragment on top of our already existing task, rather than pile up activities.
 
-        Intent dI = new Intent(this, TodoDetailActivity.class);
+        Intent dI = new Intent(this, DetailActivity.class);
         TaskStackBuilder sB = TaskStackBuilder.create(this);
         sB.addNextIntentWithParentStack(dI);
         PendingIntent contentI = sB.getPendingIntent(9, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -196,7 +197,7 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
 
     /* TODO Remove this later on. Template for now.
     public void sendDefaultNotice(View view) {
-        Intent dI = new Intent(this, TodoDetailActivity.class);
+        Intent dI = new Intent(this, DetailActivity.class);
         TaskStackBuilder sB = TaskStackBuilder.create(this);
         sB.addNextIntentWithParentStack(dI);
         PendingIntent contentI = sB.getPendingIntent(9, PendingIntent.FLAG_UPDATE_CURRENT);

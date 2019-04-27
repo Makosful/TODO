@@ -1,6 +1,6 @@
 package com.github.makosful.todo.dal;
 
-import com.github.makosful.todo.be.Todo;
+import com.github.makosful.todo.be.Notice;
 import com.github.makosful.todo.dal.storage.IStorage;
 import com.github.makosful.todo.dal.storage.TodoInMemory;
 
@@ -9,14 +9,14 @@ import com.github.makosful.todo.dal.storage.TodoInMemory;
  * implementations within the DAL package.
  */
 public class DataLayerFacade implements IDAL {
-    private IStorage<Todo> todoStorage;
+    private IStorage<Notice> todoStorage;
 
     public DataLayerFacade() {
         this.todoStorage = new TodoInMemory();
     }
 
     @Override
-    public IStorage<Todo> getTodoStorage() {
+    public IStorage<Notice> getTodoStorage() {
         return this.todoStorage;
     }
 }

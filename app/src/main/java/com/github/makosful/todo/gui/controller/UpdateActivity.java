@@ -9,14 +9,14 @@ import android.view.View;
 
 import com.github.makosful.todo.Common;
 import com.github.makosful.todo.R;
-import com.github.makosful.todo.be.Todo;
+import com.github.makosful.todo.be.Notice;
 
 import java.util.Objects;
 
-public class TodoUpdateActivity extends AppCompatActivity implements TodoFragment.TodoFragmentCallback {
-    private static final String TAG = "TodoUpdateActivity";
+public class UpdateActivity extends AppCompatActivity implements TodoFragment.TodoFragmentCallback {
+    private static final String TAG = "UpdateActivity";
 
-    private Todo todo;
+    private Notice notice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +25,11 @@ public class TodoUpdateActivity extends AppCompatActivity implements TodoFragmen
         setContentView(R.layout.activity_todo_update);
 
         Log.d(TAG, "onCreate: Reads the Extra data passed into this Intent");
-        Todo todo = (Todo) Objects.requireNonNull(getIntent().getExtras()).get(Common.EXTRA_DATA_TODO);
+        Notice notice = (Notice) Objects.requireNonNull(getIntent().getExtras()).get(Common.EXTRA_DATA_TODO);
         TodoFragment frag = (TodoFragment) getSupportFragmentManager().findFragmentById(R.id.frag_todo_update_fragment);
         assert frag != null;
         Log.d(TAG, "onCreate: Sets the TODO value of the Fragment");
-        frag.setTodo(todo);
+        frag.setNotice(notice);
     }
 
     @Override
@@ -38,8 +38,8 @@ public class TodoUpdateActivity extends AppCompatActivity implements TodoFragmen
     }
 
     @Override
-    public void updateTodo(Todo todo) {
-        this.todo = todo;
+    public void updateNotice(Notice notice) {
+        this.notice = notice;
     }
 
     /**
@@ -66,7 +66,7 @@ public class TodoUpdateActivity extends AppCompatActivity implements TodoFragmen
 
         Log.d(TAG, "saveResults: Sets results");
         Intent i = new Intent();
-        i.putExtra(Common.EXTRA_RESULT_TODO, this.todo);
+        i.putExtra(Common.EXTRA_RESULT_TODO, this.notice);
         setResult(Activity.RESULT_OK, i);
 
         finish();

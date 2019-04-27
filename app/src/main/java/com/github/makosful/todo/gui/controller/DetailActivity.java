@@ -10,11 +10,13 @@ import android.util.Log;
 
 import com.github.makosful.todo.Common;
 import com.github.makosful.todo.R;
-import com.github.makosful.todo.be.Todo;
+import com.github.makosful.todo.be.Notice;
 import com.github.makosful.todo.gui.model.MainModel;
 
-public class TodoDetailActivity extends AppCompatActivity {
-    private static final String TAG = "TodoDetailActivity";
+import java.util.Objects;
+
+public class DetailActivity extends AppCompatActivity {
+    private static final String TAG = "DetailActivity";
 
     private MainModel model;
 
@@ -22,7 +24,7 @@ public class TodoDetailActivity extends AppCompatActivity {
     private ImageView iv_image;
     private TextView tv_description;
 
-    private Todo todo;
+    private Notice notice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,23 +37,23 @@ public class TodoDetailActivity extends AppCompatActivity {
         this.tv_description = findViewById(R.id.tv_detail_description);
         this.iv_image = findViewById(R.id.iv_todo_detail_image);
 
-        int id = getIntent().getExtras().getInt(Common.EXTRA_DATA_TODO_ID);
+        int id = Objects.requireNonNull(getIntent().getExtras()).getInt(Common.EXTRA_DATA_TODO_ID);
 
-        //  gets the Todo entity from model
-        Log.d(TAG, "Getting the selected Todo Item from the model");
+        //  gets the Notice entity from model
+        Log.d(TAG, "Getting the selected Notice Item from the model");
 
-        todo = model.getTodo(id);
+        notice = model.getNotice(id);
         updateViews();
     }
 
     private void updateViews() {
-        String title = this.todo.getTitle();
+        String title = this.notice.getTitle();
         tv_title.setText(title);
 
-        String notes = this.todo.getDateAndTime().toString();
+        String notes = this.notice.getDateAndTime().toString();
         tv_description.setText(notes);
 
-        String url = this.todo.getThumbnailUrl();
+        String url = this.notice.getThumbnailUrl();
         if (url == null || url.isEmpty()) {
             iv_image.setVisibility(View.INVISIBLE);
         } else {

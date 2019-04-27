@@ -1,6 +1,6 @@
 package com.github.makosful.todo.dal.storage;
 
-import com.github.makosful.todo.be.Todo;
+import com.github.makosful.todo.be.Notice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,52 +8,52 @@ import java.util.List;
 /**
  * This class is a Mock class meant to simulate a Database
  */
-public class TodoInMemory implements IStorage<Todo> {
-    private static List<Todo> todoList;
+public class TodoInMemory implements IStorage<Notice> {
+    private static List<Notice> noticeList;
 
     public TodoInMemory() {
-        if (todoList == null)
-            todoList = new ArrayList<>();
+        if (noticeList == null)
+            noticeList = new ArrayList<>();
     }
 
     @Override
-    public boolean create(Todo item) {
-        return todoList.add(item);
+    public boolean create(Notice item) {
+        return noticeList.add(item);
     }
 
     @Override
-    public Todo read(int id) {
-        for (Todo todo: todoList) {
-            if (todo.getId() == id) {
-                return todo;
+    public Notice read(int id) {
+        for (Notice notice : noticeList) {
+            if (notice.getId() == id) {
+                return notice;
             }
         }
         return null;
     }
 
     @Override
-    public List<Todo> readAll() {
-        return todoList;
+    public List<Notice> readAll() {
+        return noticeList;
     }
 
     @Override
-    public boolean update(Todo item) {
+    public boolean update(Notice item) {
         int index = -1;
-        for (int i = 0; i < todoList.size(); i++) {
-            if (todoList.get(i).getId() == item.getId()) {
+        for (int i = 0; i < noticeList.size(); i++) {
+            if (noticeList.get(i).getId() == item.getId()) {
                 index = i;
             }
         }
 
         if (index < 0) return false;
         else {
-            todoList.set(index, item);
+            noticeList.set(index, item);
             return true;
         }
     }
 
     @Override
     public boolean delete(int id) {
-        return todoList.remove(read(id));
+        return noticeList.remove(read(id));
     }
 }

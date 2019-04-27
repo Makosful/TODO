@@ -10,14 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.makosful.todo.be.Todo;
+import com.github.makosful.todo.be.Notice;
 
 public class TodoFragment extends Fragment {
     private static final String TAG = "TodoFragment";
 
     private TodoFragmentCallback mListener;
 
-    private Todo todo;
+    private Notice notice;
 
     /**
      * Required public constructor.
@@ -79,13 +79,13 @@ public class TodoFragment extends Fragment {
 
     /**
      * Sets the local instance of the TODO entity
-     * @param todo
+     * @param notice
      */
-    public void setTodo(Todo todo) {
-        this.todo = todo;
+    public void setNotice(Notice notice) {
+        this.notice = notice;
     }
 
     public interface TodoFragmentCallback {
-        void updateTodo(Todo todo);
+        void updateNotice(Notice notice);
     }
 }

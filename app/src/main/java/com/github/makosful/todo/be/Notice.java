@@ -3,12 +3,12 @@ package com.github.makosful.todo.be;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Todo implements Serializable {
+public class Notice implements Serializable {
     private int id;
-    private String title, importance, thumbnailUrl, iconUrl;
+    private String title, importance, thumbnailUrl, iconUrl, description;
     private Date dateAndTime;
 
-    public Todo(String title, Date dateAndTime) {
+    public Notice(String title, Date dateAndTime) {
         this.title = title;
         this.dateAndTime = dateAndTime;
     }
@@ -27,6 +27,14 @@ public class Todo implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return title;
+    }
+
+    public void setDescriptionD(String description) {
+        this.description = description;
     }
 
     public Date getDateAndTime() {
