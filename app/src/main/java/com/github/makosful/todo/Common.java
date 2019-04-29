@@ -1,6 +1,9 @@
 package com.github.makosful.todo;
 
 public class Common {
+    public static final String DATABASE_NAME = "notice_database";
+    public static final int DATABASE_VERSION = 1;
+
     // Request codes for starting internal Activities.
     // Request codes here should stay in the 100 - 199 range.
     // The naming scheme of these fields are ACTIVITY_REQUEST_CODE_ followed by the given name of
