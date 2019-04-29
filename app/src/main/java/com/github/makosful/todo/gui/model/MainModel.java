@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 public class MainModel {
+
     /**
      * Logic Layer Access
      */
@@ -19,7 +20,7 @@ public class MainModel {
     private Context context;
 
     public MainModel(Context context) {
-        this.logic = new BusinessLayerFacade();
+        this.logic = new BusinessLayerFacade(context);
         // The context in which this model class lives
         this.context = context;
         this.noticeList = this.logic.getTodoStorage().readAll();
