@@ -33,7 +33,7 @@ public class Notice implements Serializable {
         return title;
     }
 
-    public void setDescriptionD(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
