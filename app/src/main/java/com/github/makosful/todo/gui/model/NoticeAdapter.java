@@ -128,7 +128,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.NoticeView
      */
     private void openDetailView(int id) {
         Intent i = new Intent(context, DetailActivity.class);
-        i.putExtra(Common.EXTRA_DATA_TODO, id);
+        i.putExtra(Common.EXTRA_DATA_TODO_ID, id);
         ((Activity)context).startActivityForResult(i, Common.ACTIVITY_REQUEST_CODE_TODO_DETAIL);
     }
 

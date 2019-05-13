@@ -42,6 +42,9 @@ public class NoticeSQLite implements IStorage<Notice> {
     public NoticeSQLite(Context context) {
         OpenHelper openHelper = new OpenHelper(context);
         this.database = openHelper.getWritableDatabase();
+
+        //Seeding database
+        seed();
     }
 
     @Override
@@ -265,5 +268,36 @@ public class NoticeSQLite implements IStorage<Notice> {
             Log.d(TAG, "onUpgrade: Dropping table");
             dropTable(db);
         }
+    }
+
+    /**
+     * Seeds the SQLite DB
+     */
+    public void seed() {
+        dropTable(this.database);
+        createTable(this.database);
+
+        int i = 0;
+        Notice notice = new Notice("1", new Date());
+        notice.setTitle("Title1");
+        notice.setId(i++);
+        notice.setThumbnailUrl("");
+        notice.setIconUrl("");
+        create(notice);
+
+        notice = new Notice("2", new Date());
+        notice.setTitle("Title2");
+        notice.setId(i++);
+        notice.setThumbnailUrl("");
+        notice.setIconUrl("");
+        create(notice);
+
+        notice = new Notice("3", new Date());
+        notice.setTitle("Title3");
+        notice.setId(i++);
+        notice.setThumbnailUrl("");
+        notice.setIconUrl("");
+        create(notice);
+
     }
 }

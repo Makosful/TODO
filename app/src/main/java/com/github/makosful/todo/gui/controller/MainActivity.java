@@ -37,9 +37,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // seed
-        new MainModel(this).seedStorage();
-
         Log.d(TAG, "onCreate: Creates a new instance of the MainModel");
 
         MainModel model = new MainModel(this);
