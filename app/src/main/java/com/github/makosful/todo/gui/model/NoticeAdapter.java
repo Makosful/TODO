@@ -95,13 +95,15 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.NoticeView
             viewHolder.dateAndTime.setText(formatter.format(dateAndTime));
         }
 
-        String importance = notice.getImportance();
-        if (importance == null || importance.isEmpty()) {
+        boolean importance = notice.isImportance();
+        if (!importance) {
             log("Notice in position (" + position + ") appears to have no importance");
-            viewHolder.importance.setText("");
+            // TODO
+            // viewHolder.importance.setText("");
         } else {
             log("Setting importance");
-            viewHolder.importance.setText(importance);
+            // TODO
+            // viewHolder.importance.setText(importance);
         }
 
         String description = notice.getDescription();

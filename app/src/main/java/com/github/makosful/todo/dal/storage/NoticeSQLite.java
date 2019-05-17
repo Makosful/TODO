@@ -48,7 +48,7 @@ public class NoticeSQLite implements IStorage<Notice> {
     }
 
     @Override
-    public boolean create(Notice notice) {
+    public Notice create(Notice notice) {
         Log.d(TAG, "create: Saving new Notice to the database");
 
         final String s = "INSERT INTO " +
@@ -76,13 +76,13 @@ public class NoticeSQLite implements IStorage<Notice> {
         }
 
         Log.d(TAG, "create: Saving importance");
-        final String importance = notice.getImportance();
-        if (importance == null || importance.isEmpty()) {
-            statement.bindNull(++i);
-            Log.d(TAG, "create: No importance found");
-        } else {
-            statement.bindString(++i, importance);
+        final boolean importance = notice.isImportance();
+        if (importance) {
+            statement.bindLong(++i, 1); // true
             Log.d(TAG, "create: Importance saved");
+        } else {
+            statement.bindLong(++i, 0); // false
+            Log.d(TAG, "create: No importance found");
         }
 
         Log.d(TAG, "create: Saving thumbnail");
@@ -128,7 +128,12 @@ public class NoticeSQLite implements IStorage<Notice> {
         Log.d(TAG, "create: Executing statement");
         final long result = statement.executeInsert();
 
-        return result >= 1;
+        if (result < 0) {
+            return null;
+        } else {
+            notice.setId((int) result);
+            return notice;
+        }
     }
 
     @Override
@@ -187,7 +192,7 @@ public class NoticeSQLite implements IStorage<Notice> {
 
         ContentValues cv = new ContentValues();
         cv.put(FIELD_TITLE,         notice.getTitle());
-        cv.put(FIELD_IMPORTANCE,    notice.getImportance());
+        cv.put(FIELD_IMPORTANCE,    notice.isImportance());
         cv.put(FIELD_THUMBNAIL,     notice.getThumbnailUrl());
         cv.put(FIELD_ICON,          notice.getIconUrl());
         cv.put(FIELD_DESCRIPTION,   notice.getDescription());
@@ -213,7 +218,7 @@ public class NoticeSQLite implements IStorage<Notice> {
         Log.d(TAG, "assembleNotice: Extracting the data from the cursor");
         final int id = cursor.getInt(++i);
         final String title = cursor.getString(++i);
-        final String importance = cursor.getString(++i);
+        final boolean importance = (cursor.getInt(++i) == 1);
         final String thumbnail = cursor.getString(++i);
         final String icon = cursor.getString(++i);
         final String description = cursor.getString(++i);
@@ -236,7 +241,7 @@ public class NoticeSQLite implements IStorage<Notice> {
         final String s = "CREATE TABLE " + TABLE_NAME + " (" +
                 FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 FIELD_TITLE + " TEXT, " +
-                FIELD_IMPORTANCE + " TEXT, " +
+                FIELD_IMPORTANCE + " INTEGER DEFAULT 0, " +
                 FIELD_THUMBNAIL + " TEXT, " +
                 FIELD_ICON + " TEXT, " +
                 FIELD_DESCRIPTION + " TEXT, " +

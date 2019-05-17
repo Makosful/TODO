@@ -1,5 +1,7 @@
 package com.github.makosful.todo.dal.storage;
 
+import com.github.makosful.todo.be.Notice;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -18,7 +20,7 @@ public interface IStorage<T extends Serializable> {
      * @param item The new item to store
      * @return Returns a boolean representing if the item has been saved correctly
      */
-    boolean create(T item);
+    Notice create(T item);
 
     /**
      * Reads a single item from the storage based on the assigned ID

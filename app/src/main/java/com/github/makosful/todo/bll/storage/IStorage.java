@@ -14,7 +14,7 @@ public interface IStorage<T extends Serializable> {
      * @param item The new item to store
      * @return Returns a boolean representing if the item has been saved correctly
      */
-    boolean create(T item);
+    T create(T item);
 
     /**
      * Reads a single item from the storage based on the assigned ID

@@ -20,7 +20,7 @@ public class TodoStorage implements IStorage<Notice> {
     }
 
     @Override
-    public boolean create(Notice item) {
+    public Notice create(Notice item) {
         return this.data.getTodoStorage().create(item);
     }
 

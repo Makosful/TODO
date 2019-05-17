@@ -116,4 +116,8 @@ public class MainModel {
         this.noticeList.add(notice);
         Log.d(TAG, "Seeded storage");
     }
+
+    public Notice addNotice(Notice notice) {
+        return this.logic.getTodoStorage().create(notice);
+    }
 }

@@ -102,7 +102,8 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "onBindViewHolder: Sets the contents of the current TODO item");
             todoViewHolder.tv_Title.setText(notice.getTitle());
             todoViewHolder.tv_Date_And_Time.setText(notice.getDateAndTime().toString());
-            todoViewHolder.tv_Importance.setText(notice.getImportance());
+            // TODO
+            // todoViewHolder.tv_Importance.setText(notice.isImportance());
             todoViewHolder.iv_Thumbnail.setImageURI(Uri.parse(notice.getThumbnailUrl()));
 
             //Checks if iconUrl is null, if not sets the image.

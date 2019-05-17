@@ -30,8 +30,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.github.makosful.todo.Common;
 import com.github.makosful.todo.R;
-import com.github.makosful.todo.bll.notifications.NotificationReceiver;
+import com.github.makosful.todo.be.Notice;
+import com.github.makosful.todo.gui.NotificationReceiver;
+import com.github.makosful.todo.gui.model.MainModel;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -47,6 +51,7 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
     private String mRepeat;
     private int noticeId = 1;
     private int mMinute, mHour, mDay, mMonth, mYear;
+    private MainModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,8 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
         setContentView(R.layout.activity_todo_add);
 
         notificationManager = NotificationManagerCompat.from(this);
+        model = new MainModel(this);
+
         etTitle = findViewById(R.id.etTitle);
         etDescription = findViewById(R.id.etDescription);
         tvTime = findViewById(R.id.tvTime);
@@ -67,6 +74,8 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
             @Override
             public boolean onLongClick(View v) {
                 sendImportantNotice(v);
+
+                Toast.makeText(AddActivity.this, "LONG PRESS", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
@@ -145,6 +154,11 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, NotificationReceiver.class);
+        //new notice
+        Notice n = new Notice(etTitle.getText().toString(), mDate);
+        
+        Notice notice = model.addNotice(n); // Stores the notice to get the id
+        intent.putExtra(Common.EXTRA_DATA_NOTIFICATION_NOTICE, notice);
         // TODO unique request codes maybe?
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
 

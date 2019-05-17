@@ -21,7 +21,7 @@
         </activity>
         <activity android:name=".gui.controller.DetailActivity" />
         <activity android:name=".gui.controller.UpdateActivity" />
-        <receiver android:name=".bll.notifications.NotificationReceiver"/>
+        <receiver android:name=".gui.NotificationReceiver"/>
     </application>
 
 </manifest>

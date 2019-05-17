@@ -32,5 +32,6 @@ public class Common {
     // the name of the data being passed in
     public static final String EXTRA_DATA_TODO    = "dataTodo";
     public static final String EXTRA_DATA_TODO_ID = "dataTodoId";
+    public static final String EXTRA_DATA_NOTIFICATION_NOTICE = "notificationNotice";
     public static final String EXTRA_RESULT_TODO  = "resultTodo";
 }
