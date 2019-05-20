@@ -169,6 +169,10 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
 
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
         Toast.makeText(this, "Reminder set for " + DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime()), Toast.LENGTH_SHORT).show();
+
+        // Creates a new instance of the MainActivity to repopulate listview as a quick easy solution
+        Intent x = new Intent(this, MainActivity.class);
+        startActivity(x);
     }
 
     public void sendImportantNotice(View view) {

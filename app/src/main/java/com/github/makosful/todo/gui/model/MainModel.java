@@ -45,6 +45,10 @@ public class MainModel {
         return this.logic.getTodoStorage().read(id);
     }
 
+    public boolean delete(int id) {
+        return this.logic.getTodoStorage().delete(id);
+    }
+
     //TODO to be removed
     public void seedStorage() {
         Log.d(TAG, "Attempting to seed storage");

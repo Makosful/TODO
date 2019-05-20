@@ -44,7 +44,7 @@ public class NoticeSQLite implements IStorage<Notice> {
         this.database = openHelper.getWritableDatabase();
 
         //Seeding database
-        seed();
+        //seed();
     }
 
     @Override
