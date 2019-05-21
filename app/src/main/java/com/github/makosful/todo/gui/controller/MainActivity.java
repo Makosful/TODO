@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             todoViewHolder.tv_Title.setText(notice.getTitle());
             todoViewHolder.tv_Date_And_Time.setText(notice.getDateAndTime().toString());
             // TODO
-            // todoViewHolder.tv_Importance.setText(notice.isImportance());
+            // todoViewHolder.tv_Importance.setText(notice.getImportance());
             todoViewHolder.iv_Thumbnail.setImageURI(Uri.parse(notice.getThumbnailUrl()));
 
             //Checks if iconUrl is null, if not sets the image.

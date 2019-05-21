@@ -155,10 +155,16 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, NotificationReceiver.class);
         //new notice
-        Notice n = new Notice(etTitle.getText().toString(), mDate);
+        Notice n = new Notice(
+                etTitle.getText().toString(),
+                mDate,
+                etDescription.getText().toString(),
+                tvPriority.getText().toString());
         
         Notice notice = model.addNotice(n); // Stores the notice to get the id
-        intent.putExtra(Common.EXTRA_DATA_NOTIFICATION_NOTICE, notice);
+
+        //Adds the Id as an "Extra" in the Intent.
+        intent.putExtra(Common.EXTRA_DATA_NOTIFICATION_NOTICE, notice.getId());
         // TODO unique request codes maybe?
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
 

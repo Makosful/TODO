@@ -60,11 +60,11 @@ public class NotificationHelper extends ContextWrapper {
         }
     }
 
-    public NotificationCompat.Builder getImportantNotification() {
+    public NotificationCompat.Builder getImportantNotification(String title, String description) {
         return new NotificationCompat.Builder(getApplicationContext(), CHANNEL_2_ID)
                 .setSmallIcon(R.drawable.ic_notifications_important) // Icon that is displayed
-                .setContentTitle(getString(R.string.importantNotice)) // TITLE text
-                .setContentText("Description") // BODY text
+                .setContentTitle(title) // TITLE text
+                .setContentText(description) // BODY text
                 .setLargeIcon(bmp) // adds the "large" icon, when we expand the notification
                 .setStyle(new android.support.v4.media.app.NotificationCompat.MediaStyle())
                 .setPriority(NotificationCompat.PRIORITY_HIGH) // priority to help android decide the importance
@@ -81,10 +81,10 @@ public class NotificationHelper extends ContextWrapper {
         }
     }
 
-    public NotificationCompat.Builder getDefaultNotification() {
+    public NotificationCompat.Builder getDefaultNotification(String title, String description) {
         return new NotificationCompat.Builder(getApplicationContext(), CHANNEL_1_ID)
-                .setContentTitle(getString(R.string.defaultNotice)) // TODO Grab Activity to set title, text etc.
-                .setContentText("Description")
+                .setContentTitle(title) // TITLE text
+                .setContentText(description) // BODY text
                 .setLights(Color.BLUE, 1000, 2000)
                 .setVibrate(new long[] {0, 500, 250, 500}) // sets the vibration pattern
                 .setSmallIcon(R.drawable.ic_notifications_default); // sets the icon of the notification

@@ -76,15 +76,13 @@ public class NoticeSQLite implements IStorage<Notice> {
         }
 
         Log.d(TAG, "create: Saving importance");
-        final boolean importance = notice.isImportance();
-        if (importance) {
-            statement.bindLong(++i, 1); // true
-            Log.d(TAG, "create: Importance saved");
-        } else {
-            statement.bindLong(++i, 0); // false
+        final String importance = notice.getImportance();
+        if (importance == null || importance.isEmpty()) {
+            statement.bindNull(++i);
             Log.d(TAG, "create: No importance found");
+        } else {
+            statement.bindString(++i, importance);
         }
-
         Log.d(TAG, "create: Saving thumbnail");
         final String thumbnailUrl = notice.getThumbnailUrl();
         if (thumbnailUrl == null || thumbnailUrl.isEmpty()) {
@@ -192,7 +190,7 @@ public class NoticeSQLite implements IStorage<Notice> {
 
         ContentValues cv = new ContentValues();
         cv.put(FIELD_TITLE,         notice.getTitle());
-        cv.put(FIELD_IMPORTANCE,    notice.isImportance());
+        cv.put(FIELD_IMPORTANCE,    notice.getImportance());
         cv.put(FIELD_THUMBNAIL,     notice.getThumbnailUrl());
         cv.put(FIELD_ICON,          notice.getIconUrl());
         cv.put(FIELD_DESCRIPTION,   notice.getDescription());
@@ -218,14 +216,14 @@ public class NoticeSQLite implements IStorage<Notice> {
         Log.d(TAG, "assembleNotice: Extracting the data from the cursor");
         final int id = cursor.getInt(++i);
         final String title = cursor.getString(++i);
-        final boolean importance = (cursor.getInt(++i) == 1);
+        final String importance = cursor.getString(++i);
         final String thumbnail = cursor.getString(++i);
         final String icon = cursor.getString(++i);
         final String description = cursor.getString(++i);
         final long time = cursor.getLong(++i);
 
         Log.d(TAG, "assembleNotice: Creating a new Notice based on the data");
-        final Notice notice = new Notice(title, new Date(time));
+        final Notice notice = new Notice(title, new Date(time), description, importance);
         notice.setId(id);
         notice.setImportance(importance);
         notice.setThumbnailUrl(thumbnail);
@@ -283,21 +281,21 @@ public class NoticeSQLite implements IStorage<Notice> {
         createTable(this.database);
 
         int i = 0;
-        Notice notice = new Notice("1", new Date());
+        Notice notice = new Notice("1", new Date(), "test", "Important");
         notice.setTitle("Title1");
         notice.setId(i++);
         notice.setThumbnailUrl("");
         notice.setIconUrl("");
         create(notice);
 
-        notice = new Notice("2", new Date());
+        notice = new Notice("2", new Date(), "test", "Important");
         notice.setTitle("Title2");
         notice.setId(i++);
         notice.setThumbnailUrl("");
         notice.setIconUrl("");
         create(notice);
 
-        notice = new Notice("3", new Date());
+        notice = new Notice("3", new Date(), "test", "Important");
         notice.setTitle("Title3");
         notice.setId(i++);
         notice.setThumbnailUrl("");

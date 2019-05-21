@@ -5,13 +5,14 @@ import java.util.Date;
 
 public class Notice implements Serializable {
     private int id;
-    private String title, thumbnailUrl, iconUrl, description;
+    private String title, thumbnailUrl, iconUrl, description, importance;
     private Date dateAndTime;
-    private boolean importance;
 
-    public Notice(String title, Date dateAndTime) {
+    public Notice(String title, Date dateAndTime, String description, String importance) {
         this.title = title;
         this.dateAndTime = dateAndTime;
+        this.description = description;
+        this.importance = importance;
     }
 
     public int getId() {
@@ -46,11 +47,11 @@ public class Notice implements Serializable {
         this.dateAndTime = dateAndTime;
     }
 
-    public boolean isImportance() {
+    public String getImportance() {
         return importance;
     }
 
-    public void setImportance(boolean importance) {
+    public void setImportance(String importance) {
         this.importance = importance;
     }
 
