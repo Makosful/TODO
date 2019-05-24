@@ -1,5 +1,6 @@
 package com.github.makosful.todo.gui.controller;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Notification;
@@ -9,12 +10,15 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.NotificationCompat;
@@ -33,6 +37,7 @@ import android.widget.Toast;
 import com.github.makosful.todo.Common;
 import com.github.makosful.todo.R;
 import com.github.makosful.todo.be.Notice;
+import com.github.makosful.todo.gui.Custom.Camera;
 import com.github.makosful.todo.gui.NotificationReceiver;
 import com.github.makosful.todo.gui.model.MainModel;
 
@@ -40,6 +45,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
 import static com.github.makosful.todo.bll.notifications.NotificationHelper.CHANNEL_2_ID;
 
 public class AddActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
@@ -52,6 +58,9 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
     private int noticeId = 1;
     private int mMinute, mHour, mDay, mMonth, mYear;
     private MainModel model;
+
+    private Camera camera;
+    private Uri imagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +96,82 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
         mDay = c.get(Calendar.DAY_OF_MONTH);
         mMonth = c.get(Calendar.MONTH);
         mYear = c.get(Calendar.YEAR);
+
+        this.camera = new Camera(this);
+    }
+
+    /**
+     * Handles the response for when Activities called by this Activity, using the
+     * startActivityForResult method after they've called finish().
+     *
+     * @param requestCode The code used to launch the other Activity. Used to identify the
+     *                    appropriate response
+     * @param resultCode A code signaling whether the Activity was finished ot canceled. See
+     *                   Activity.RESULT_CANCELED and Activity.RESULT_OK. Custom codes can also be
+     *                   used
+     * @param data The Intent containing the result data, if any.
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == Activity.RESULT_CANCELED) return;
+
+        switch (requestCode) {
+            case Common.SERVICE_REQUEST_CODE_CAMERA:
+                handleCameraResponse();
+                break;
+            default:
+                Toast.makeText(this, "Unknown request code", Toast.LENGTH_LONG).show();
+                break;
+        }
+    }
+
+    /**
+     * Handles the actions taken after the camera has taken the picture.
+     * In case the Camera was canceled and no picture was taken, then the appropriate action should
+     *      be taken in onActivityResult
+     */
+    private void handleCameraResponse() {
+        // TODO: Handle the image response
+        // URI saved in this.imagePath;
+    }
+
+    /**
+     * Handles permission requests sent from this activity
+     *
+     * @param requestCode The code used to make the request. Used to identify the appropriate
+     *                    response
+     * @param permissions The array of permissions asked for in the request
+     * @param grantResults A parallel array to the permissions array containing the response
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case Common.PERMISSION_REQUEST_CODE_CAMERA:
+                handleCameraPermissionResult(permissions, grantResults);
+                break;
+            default:
+                Toast.makeText(this, "Unknown request code", Toast.LENGTH_LONG).show();
+                break;
+        }
+    }
+
+    /**
+     * Checks if any permission has been denied. If all have been granted, launches the Camera
+     * @param permissions An array containing all the permissions asked for
+     * @param grantResults An array containing the result for the request
+     */
+    private void handleCameraPermissionResult(String[] permissions, int[] grantResults) {
+        for (int i = 0; i < grantResults.length; i++) {
+            if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                String msg = "Failed to get permission for [" +
+                        permissions[i] +
+                        "]";
+                Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
+
+        this.imagePath = this.camera.launchCameraAndGetFileUri();
     }
 
     public void setTime(View view) {
@@ -128,8 +213,14 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
     }
 
     public void addPicture(View view) {
-        // TODO Add (optional) picture to the task.
-        Toast.makeText(this, "Not added yet.", Toast.LENGTH_SHORT).show();
+        // Asks for permission to use the camera and storage
+        if (!this.camera.requestPermissions()) {
+            // The boolean indicate whether a request was sent or not.
+            // true means one or more permissions are missing, and a request has been sent
+            //      and further actions should go through the onRequestPermissionsResult method
+            // false means all permissions are granted and the app can proceed as normal.
+            this.imagePath = this.camera.launchCameraAndGetFileUri();
+        } // else, continue in onRequestPermissionsResult
     }
 
     public void addActivity(View view) {
