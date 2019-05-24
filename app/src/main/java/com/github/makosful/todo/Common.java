@@ -4,6 +4,8 @@ public class Common {
     public static final String DATABASE_NAME = "notice_database";
     public static final int DATABASE_VERSION = 1;
 
+    public static final String APPLICATION_NAME = "Notification App";
+
     // Request codes for starting internal Activities.
     // Request codes here should stay in the 100 - 199 range.
     // The naming scheme of these fields are ACTIVITY_REQUEST_CODE_ followed by the given name of
@@ -17,13 +19,13 @@ public class Common {
     // Request codes here should stay in the 200 - 299 range.
     // The naming scheme of these fields are SERVICE_REQUEST_CODE_ followed by the name of the
     // Activity
-    public static final int SERVICE_REQUEST_CODE_SAMLE = 0; // Sample, remove once a proper code has been defined
+    public static final int SERVICE_REQUEST_CODE_CAMERA = 200;
 
     // Request codes for permissions.
     // Request codes here should stay in the 300 - 399 range.
     // Field naming scheme is PERMISSION_REQUEST_CODE_ followed by the name of the permission(s)
     // If multiple permissions are requested using the same code, name them as a group instead.
-    public static final int PERMISSION_REQUEST_CODE_SAMPLE = 0; // Sample, remove once a proper code has been defined
+    public static final int PERMISSION_REQUEST_CODE_CAMERA = 300;
 
     // The names of the data passed into the Extra slot of Intents
     // Fields used for passing data into a StartActivityForResult should use the naming scheme
