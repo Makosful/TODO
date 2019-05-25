@@ -23,6 +23,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -54,7 +55,6 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
     private TextView tvPriority, tvDate, tvTime;
     private Calendar c;
     private Date mDate;
-    private String mRepeat;
     private int noticeId = 1;
     private int mMinute, mHour, mDay, mMonth, mYear;
     private MainModel model;
@@ -85,9 +85,9 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
         btnAddActivity.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                // easter egg
                 sendImportantNotice(v);
-
-                Toast.makeText(AddActivity.this, "LONG PRESS", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddActivity.this, "This is not the feature you're looking for.", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
@@ -260,8 +260,8 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
 
         //Adds the Id as an "Extra" in the Intent.
         intent.putExtra(Common.EXTRA_DATA_NOTIFICATION_NOTICE, notice.getId());
-        // TODO unique request codes maybe?
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
+        // unique request codes maybe?
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         if (c.before(Calendar.getInstance())) {
             Toast.makeText(this, "Sorry, we can't go back in time. Set time/date to a future date", Toast.LENGTH_LONG).show();
@@ -281,22 +281,23 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
         When we tap the notification we open the details activity for this specific task (not to be confused with android Task)
         and we close the notification afterwards. In order to not launch activity upon activity we will make a stack builder
         so that we can simply add this fragment on top of our already existing task, rather than pile up activities.
-
+        */
         Intent dI = new Intent(this, DetailActivity.class);
         TaskStackBuilder sB = TaskStackBuilder.create(this);
         sB.addNextIntentWithParentStack(dI);
-        PendingIntent contentI = sB.getPendingIntent(9, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent contentI = sB.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        This adds the bottom part of our notification, allowing us to perform certain actions when pressed. In this example
-        all we do is make a toast, however this will most likely be used to "auto ocmplete" the task without having to enter the
+        /* This adds the bottom part of our notification, allowing us to perform certain actions when pressed. In this example
+        all we do is make a toast, however this will most likely be used to "auto complete" the task without having to enter the
         GUI for the app itself, allowing for easy access of the user.
         A scenario where this is intended to directly solve is:
         If a user has done a task simply by remembering to do it, but have forgotten to mark it as finished in the app.
+        */
 
         Intent bI = new Intent(this, NotificationReceiver.class);
         bI.putExtra("toastMsg", etDescription.getText().toString());
         PendingIntent aI = PendingIntent.getBroadcast(this, 0, bI, PendingIntent.FLAG_UPDATE_CURRENT);
-        */
+
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.bossrob);
 
         Notification notice = new NotificationCompat.Builder(this, CHANNEL_2_ID)
@@ -315,32 +316,6 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
         notificationManager.notify(noticeId++, notice);
     }
 
-    /* TODO Remove this later on. Template for now.
-    public void sendDefaultNotice(View view) {
-        Intent dI = new Intent(this, DetailActivity.class);
-        TaskStackBuilder sB = TaskStackBuilder.create(this);
-        sB.addNextIntentWithParentStack(dI);
-        PendingIntent contentI = sB.getPendingIntent(9, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Intent bI = new Intent(this, NotificationReceiver.class);
-        bI.putExtra("toastMsg", etDescription.getText().toString());
-        PendingIntent aI = PendingIntent.getBroadcast(this, 0, bI, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Notification notice = new NotificationCompat.Builder(this, CHANNEL_1_ID)
-                .setSmallIcon(R.drawable.ic_notifications_default)
-                .setContentTitle(etTitle.getText().toString())
-                .setContentText(etDescription.getText().toString())
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setCategory(NotificationCompat.CATEGORY_REMINDER)
-                .setContentIntent(contentI)
-                .addAction(R.mipmap.ic_launcher_round, getString(R.string.details), aI)
-                .setOnlyAlertOnce(false)
-                .setAutoCancel(true)
-                .build();
-
-        notificationManager.notify(noticeId++, notice);
-    }
-    */
 
     /**
      * Opens the settings tab for our application. The way we do this is feed android our package name
@@ -385,10 +360,8 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
     public void onSwitchRepeat(View view) {
         boolean on = ((Switch) view).isChecked();
         if (on) {
-            mRepeat = "on";
             tvPriority.setText(R.string.important);
         } else {
-            mRepeat = "off";
             tvPriority.setText(R.string.unimportant);
         }
     }

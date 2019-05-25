@@ -84,7 +84,6 @@ public class DetailActivity extends AppCompatActivity {
                 1, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);
 
-
         model.delete(alarmID);
 
         // Creates a new instance of the MainActivity to repopulate listview as a quick easy solution

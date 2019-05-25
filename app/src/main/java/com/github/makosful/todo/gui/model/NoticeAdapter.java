@@ -98,11 +98,11 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.NoticeView
         String importance = notice.getImportance();
         if (importance == null || importance.isEmpty())  {
             log("Notice in position (" + position + ") appears to have no importance");
-            // TODO
+            // TODO not important
             // viewHolder.importance.setText("");
         } else {
             log("Setting importance");
-            // TODO
+            // TODO important
             // viewHolder.importance.setText(importance);
         }
 

@@ -61,6 +61,7 @@ public class NotificationHelper extends ContextWrapper {
     }
 
     public NotificationCompat.Builder getImportantNotification(String title, String description) {
+        //TODO add .setContentIntent
         return new NotificationCompat.Builder(getApplicationContext(), CHANNEL_2_ID)
                 .setSmallIcon(R.drawable.ic_notifications_important) // Icon that is displayed
                 .setContentTitle(title) // TITLE text
@@ -82,6 +83,7 @@ public class NotificationHelper extends ContextWrapper {
     }
 
     public NotificationCompat.Builder getDefaultNotification(String title, String description) {
+        //TODO add .setContentIntent
         return new NotificationCompat.Builder(getApplicationContext(), CHANNEL_1_ID)
                 .setContentTitle(title) // TITLE text
                 .setContentText(description) // BODY text

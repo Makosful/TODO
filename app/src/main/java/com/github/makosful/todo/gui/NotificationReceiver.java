@@ -16,7 +16,6 @@ public class NotificationReceiver extends BroadcastReceiver {
     /* TODO Finalize the notificationID below from autoIncrement in database. */
     private int i = 1;
     /***
-     * TODO Action when tapping notification (Toast atm)
      * This is what happens when we decide to press the activity, will be changed to display
      * DetailActivity for this specific task (if we make it that far)
      * @param context .
@@ -38,7 +37,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         Notice n = model.getNotice(id); //Gets the notification from the DB
 
         NotificationHelper notificationHelper = new NotificationHelper(context);
-        /* TODO Check if notifications is marked as IMPORTANT or not */
+        // Check if notifications is marked as IMPORTANT or not
         if(n.getImportance().equals("Important")) {
             NotificationCompat.Builder nb = notificationHelper.getImportantNotification(n.getTitle(), n.getDescription());
             notificationHelper.getManager().notify(n.getId(), nb.build());
