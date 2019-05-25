@@ -201,7 +201,7 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
 
     public void setDate(View view) {
         DialogFragment dateDialog = new com.github.makosful.todo.bll.notifications.DatePickerDialog();
-        dateDialog.show(getSupportFragmentManager(), getString(R.string.timeDialog));
+        dateDialog.show(getSupportFragmentManager(), getString(R.string.dateDialog));
     }
 
     @Override
@@ -210,8 +210,8 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
         mYear = year;
         mMonth = month;
         mDay = dayOfMonth;
+        c.set(year,month,dayOfMonth, 0,0);
         mDate = c.getTime();
-
         // To format the date to only include the date in the format we wish for. Format: 01 january 2019
         tvDate.setText(dateFormatter.format(mDate));
     }

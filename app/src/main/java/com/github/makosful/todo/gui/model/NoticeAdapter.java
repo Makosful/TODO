@@ -99,10 +99,11 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.NoticeView
         String importance = notice.getImportance();
         log("Setting importance");
         if (importance == null || importance.isEmpty())  {
-            log("Notice in position (" + position + ") has default importance");
+            log("Notice in position (" + position + ") has no importance");
+            viewHolder.icon.setImageDrawable(null);
+        } else if (importance.equalsIgnoreCase("default")) {
             viewHolder.icon.setImageResource(R.drawable.ic_notifications_default);
-            // TO REMOVE IMAGE: viewHolder.icon.setImageDrawable(null);
-        } else {
+        } else if (importance.equalsIgnoreCase("important")) {
             viewHolder.icon.setImageResource(R.drawable.ic_notifications_important);
         }
 
