@@ -177,7 +177,6 @@ public class MainActivity extends AppCompatActivity {
 
             this.tv_Title = itemView.findViewById(R.id.notice_title);
             this.tv_Date_And_Time = itemView.findViewById(R.id.notice_date_time);
-            this.tv_Importance = itemView.findViewById(R.id.notice_importance);
             this.iv_Thumbnail = itemView.findViewById(R.id.notice_thumbnail);
             this.iv_Icon = itemView.findViewById(R.id.notice_icon);
             this.outerParent = itemView.findViewById(R.id.outer_parent);

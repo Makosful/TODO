@@ -8,7 +8,7 @@
     <string name="timeDialog">Time dialog</string>
     <string name="dateDialog">Date dialog</string>
     <string name="notice_title">Enter title</string>
-    <string name="notice_description">Enter a description</string>
+    <string name="notice_description">Enter a description. \n 2 lines max</string>
     <string name="date">Date</string>
     <string name="time">Time</string>
     <string name="priority">Priority</string>

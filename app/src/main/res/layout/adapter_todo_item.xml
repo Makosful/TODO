@@ -47,19 +47,11 @@
             tools:text="Date and Time stamp" />
 
         <TextView
-            android:id="@+id/notice_importance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="marquee"
-            android:singleLine="true"
-            android:textSize="15sp"
-            tools:text="Importance of reminder" />
-
-        <TextView
             android:id="@+id/notice_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
+            android:inputType="textMultiLine"
             android:maxLines="2"
             android:singleLine="true"
             android:textSize="15sp"

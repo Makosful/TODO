@@ -160,7 +160,6 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.NoticeView
             thumbnail = itemView.findViewById(R.id.notice_thumbnail);
             title = itemView.findViewById(R.id.notice_title);
             dateAndTime = itemView.findViewById(R.id.notice_date_time);
-            importance = itemView.findViewById(R.id.notice_importance);
             description = itemView.findViewById(R.id.notice_description);
             icon = itemView.findViewById(R.id.notice_icon);
 

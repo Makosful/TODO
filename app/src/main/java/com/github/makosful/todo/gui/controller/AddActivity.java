@@ -62,6 +62,9 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
     private Camera camera;
     private Uri imagePath;
 
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd MMMM yyyy");
+    private SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss z");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +99,11 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
         mDay = c.get(Calendar.DAY_OF_MONTH);
         mMonth = c.get(Calendar.MONTH);
         mYear = c.get(Calendar.YEAR);
+
+        //fill fields by default with current time when starting activity.
+        mDate = c.getTime();
+        tvDate.setText(dateFormatter.format(mDate));
+        tvTime.setText(timeFormatter.format(mDate));
 
         this.camera = new Camera(this);
     }
@@ -188,9 +196,7 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
         mDate = c.getTime();
 
         // To format the date to only include the time as well as timezone rather than full on date.
-        SimpleDateFormat formatter= new SimpleDateFormat("HH:mm:ss z");
-
-        tvTime.setText(formatter.format(mDate));
+        tvTime.setText(timeFormatter.format(mDate));
     }
 
     public void setDate(View view) {
@@ -207,9 +213,7 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
         mDate = c.getTime();
 
         // To format the date to only include the date in the format we wish for. Format: 01 january 2019
-        SimpleDateFormat formatter= new SimpleDateFormat("dd MMMM yyyy");
-
-        tvDate.setText(formatter.format(mDate));
+        tvDate.setText(dateFormatter.format(mDate));
     }
 
     public void addPicture(View view) {
