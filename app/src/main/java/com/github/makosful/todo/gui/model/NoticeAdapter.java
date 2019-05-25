@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -96,14 +97,13 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.NoticeView
         }
 
         String importance = notice.getImportance();
+        log("Setting importance");
         if (importance == null || importance.isEmpty())  {
-            log("Notice in position (" + position + ") appears to have no importance");
-            // TODO not important
-            // viewHolder.importance.setText("");
+            log("Notice in position (" + position + ") has default importance");
+            viewHolder.icon.setImageResource(R.drawable.ic_notifications_default);
+            // TO REMOVE IMAGE: viewHolder.icon.setImageDrawable(null);
         } else {
-            log("Setting importance");
-            // TODO important
-            // viewHolder.importance.setText(importance);
+            viewHolder.icon.setImageResource(R.drawable.ic_notifications_important);
         }
 
         String description = notice.getDescription();
@@ -156,7 +156,6 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.NoticeView
             outerParent = itemView.findViewById(R.id.outer_parent);
             //linear view parent to everything EXCEPT thumbnail
             innerParent = itemView.findViewById(R.id.inner_parent);
-
             thumbnail = itemView.findViewById(R.id.notice_thumbnail);
             title = itemView.findViewById(R.id.notice_title);
             dateAndTime = itemView.findViewById(R.id.notice_date_time);

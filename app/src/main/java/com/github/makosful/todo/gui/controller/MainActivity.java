@@ -3,6 +3,7 @@ package com.github.makosful.todo.gui.controller;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -102,8 +103,14 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "onBindViewHolder: Sets the contents of the current TODO item");
             todoViewHolder.tv_Title.setText(notice.getTitle());
             todoViewHolder.tv_Date_And_Time.setText(notice.getDateAndTime().toString());
-            // TODO
-            // todoViewHolder.tv_Importance.setText(notice.getImportance());
+            Log.d(TAG, "onBindViewHolder: IMPORTANCE = " + notice.getImportance());
+            if (notice.getImportance().equals("important")) {
+                todoViewHolder.iv_Icon.setImageResource(R.drawable.ic_notifications_important);
+            } else {
+                //transparent background, remove image
+                todoViewHolder.iv_Icon.setBackgroundColor(Color.TRANSPARENT);
+                todoViewHolder.iv_Icon.setImageDrawable(null);
+            }
             todoViewHolder.iv_Thumbnail.setImageURI(Uri.parse(notice.getThumbnailUrl()));
 
             //Checks if iconUrl is null, if not sets the image.
@@ -160,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
     private class TodoViewHolder extends RecyclerView.ViewHolder {
         private static final String TAG = "TodoViewHolder";
 
-        private TextView tv_Title, tv_Date_And_Time, tv_Importance;
+        private TextView tv_Title, tv_Date_And_Time;
         private ImageView iv_Thumbnail, iv_Icon;
         private RelativeLayout outerParent;
         private LinearLayout innerParent;
