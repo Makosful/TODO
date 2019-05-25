@@ -35,7 +35,7 @@ public class TodoStorage implements IStorage<Notice> {
     }
 
     @Override
-    public boolean update(Notice item) {
+    public Notice update(Notice item) {
         return this.data.getTodoStorage().update(item);
     }
 

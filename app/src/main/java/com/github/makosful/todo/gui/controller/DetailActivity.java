@@ -90,4 +90,11 @@ public class DetailActivity extends AppCompatActivity {
         Intent x = new Intent(this, MainActivity.class);
         startActivity(x);
     }
+
+    public void updateActivity(View view) {
+        Log.d(TAG ,"Update Activity clicked");
+        Intent x = new Intent(this, UpdateActivity.class);
+        x.putExtra(Common.EXTRA_DATA_UPDATE_ID, alarmID);
+        startActivity(x);
+    }
 }

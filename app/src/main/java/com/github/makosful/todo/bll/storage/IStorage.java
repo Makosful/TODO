@@ -37,7 +37,7 @@ public interface IStorage<T extends Serializable> {
      * @param item The item T to update
      * @return Returns a boolean representing whether the update was successful or not
      */
-    boolean update(T item);
+    T update(T item);
 
     /**
      * Deletes the object with the given ID from storage

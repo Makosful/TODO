@@ -185,7 +185,7 @@ public class NoticeSQLite implements IStorage<Notice> {
     }
 
     @Override
-    public boolean update(Notice notice) {
+    public Notice update(Notice notice) {
         Log.d(TAG, "update: Updating Notice with id: " + notice.getId());
 
         ContentValues cv = new ContentValues();
@@ -197,8 +197,10 @@ public class NoticeSQLite implements IStorage<Notice> {
         cv.put(FIELD_DATE,          notice.getDateAndTime().getTime());
 
         Log.d(TAG, "update: Fires off the UPDATE statement");
-        int result = this.database.update(TABLE_NAME, cv, FIELD_ID + " = ?", new String[] {"" + notice.getId()});
-        return result >= 1;
+
+        this.database.update(TABLE_NAME, cv, "id=" + notice.getId(), null);
+
+        return notice;
     }
 
     @Override

@@ -51,4 +51,7 @@ public class MainModel {
     public Notice addNotice(Notice notice) {
         return this.logic.getTodoStorage().create(notice);
     }
+
+    public Notice updateNotice(Notice n) { return this.logic.getTodoStorage().update(n);
+    }
 }
