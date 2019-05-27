@@ -22,10 +22,11 @@
     <ImageView
         android:id="@+id/iv_todo_detail_image"
         android:layout_width="0dp"
-        android:layout_height="256dp"
+        android:layout_height="350dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:adjustViewBounds="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_todo_detail_title"
@@ -33,12 +34,11 @@
 
 
     <View
-        android:id="@+id/divider2"
-        android:layout_width="395dp"
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="8dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toTopOf="@+id/tv_detail_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_todo_detail_image" />
@@ -68,14 +68,15 @@
 
     <TextView
         android:id="@+id/tv_detail_description"
-        android:layout_width="387dp"
-        android:layout_height="355dp"
+        android:layout_width="379dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:text=" Nam sed ante nulla. Nam eu suscipit lorem, in pharetra mi. Phasellus bibendum, tortor a gravida fringilla, est ante molestie tortor, vitae porta nibh mi at turpis. Nunc consequat eros elementum, lobortis felis ut, feugiat orci. Praesent congue sodales erat in elementum. Vestibulum sit amet libero laoreet, sodales neque vel, elementum tortor. Morbi pharetra imperdiet dolor eget finibus. Etiam maximus bibendum metus, quis faucibus turpis varius congue. Suspendisse potenti. Phasellus elementum urna vel urna sollicitudin, et rutrum leo convallis. Cras commodo quam congue tristique consequat. Donec aliquam enim in scelerisque mattis. Nunc blandit ultrices semper. Fusce id augue vel mi fringilla consectetur. Quisque vitae justo quis risus pellentesque sagittis et non tortor. "
-        app:layout_constraintBottom_toTopOf="@+id/btn_todo_detail_delete"
-        app:layout_constraintEnd_toEndOf="@+id/iv_todo_detail_image"
-        app:layout_constraintStart_toStartOf="@+id/iv_todo_detail_image"
-        app:layout_constraintTop_toBottomOf="@+id/divider2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
         tools:text=" Nam sed ante nulla. Nam eu suscipit lorem, in pharetra mi. Phasellus bibendum, tortor a gravida fringilla, est ante molestie tortor, vitae porta nibh mi at turpis. Nunc consequat eros elementum, lobortis felis ut, feugiat orci. Praesent congue sodales erat in elementum. Vestibulum sit amet libero laoreet, sodales neque vel, elementum tortor. Morbi pharetra imperdiet dolor eget finibus. Etiam maximus bibendum metus, quis faucibus turpis varius congue. Suspendisse potenti. Phasellus elementum urna vel urna sollicitudin, et rutrum leo convallis. Cras commodo quam congue tristique consequat. Donec aliquam enim in scelerisque mattis. Nunc blandit ultrices semper. Fusce id augue vel mi fringilla consectetur. Quisque vitae justo quis risus pellentesque sagittis et non tortor. " />
 
 
