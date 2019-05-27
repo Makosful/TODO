@@ -39,7 +39,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         NotificationHelper notificationHelper = new NotificationHelper(context);
         // Check if notifications is marked as IMPORTANT or not
         if(n.getImportance().equals("Important")) {
-            NotificationCompat.Builder nb = notificationHelper.getImportantNotification(n.getTitle(), n.getDescription(), n.getId());
+            NotificationCompat.Builder nb = notificationHelper.getImportantNotification(n.getTitle(), n.getDescription(), n.getId(), n.getThumbnailUrl());
             notificationHelper.getManager().notify(n.getId(), nb.build());
         } else if (n.getImportance().equals("Default")) {
             NotificationCompat.Builder nb = notificationHelper.getDefaultNotification(n.getTitle(), n.getDescription(), n.getId());

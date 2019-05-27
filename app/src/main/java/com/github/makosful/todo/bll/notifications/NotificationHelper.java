@@ -33,7 +33,6 @@ public class NotificationHelper extends ContextWrapper {
         super(base);
         ctx = base;
         createNotificationChannels();
-        bmp = BitmapFactory.decodeResource(getResources(), R.drawable.bossrob);
     }
 
     public NotificationManager getManager() {
@@ -67,10 +66,15 @@ public class NotificationHelper extends ContextWrapper {
         }
     }
 
-    public NotificationCompat.Builder getImportantNotification(String title, String description, int id) {
+    public NotificationCompat.Builder getImportantNotification(String title, String description, int id, String imgPath) {
         Intent i = new Intent(this, NotificationReceiver.class);
         PendingIntent pI = PendingIntent.getActivity(ctx, (int) System.currentTimeMillis(), i, 0);
         i.putExtra(Common.EXTRA_DATA_NOTICE_DETAILS, id);
+
+        if (imgPath != null) {
+            bmp = BitmapFactory.decodeFile(imgPath);
+        }
+
         return new NotificationCompat.Builder(getApplicationContext(), CHANNEL_2_ID)
                 .setSmallIcon(R.drawable.ic_notifications_important) // Icon that is displayed
                 .setContentTitle(title) // TITLE text
