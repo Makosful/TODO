@@ -68,7 +68,11 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.NoticeView
         final Notice notice = noticeList.get(position);
 
         try {
+            Log.d(TAG, "onBindViewHolder: Trying to get image");
+            Log.d(TAG, "onBindViewHolder: " + notice.getThumbnailUrl());
             if (notice.getThumbnailUrl() != null) {
+                Uri uri = Uri.parse(notice.getThumbnailUrl());
+                Log.d(TAG, "onBindViewHolder: " + uri);
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), Uri.parse(notice.getThumbnailUrl()));
                 viewHolder.thumbnail.setImageBitmap(bitmap);
             }

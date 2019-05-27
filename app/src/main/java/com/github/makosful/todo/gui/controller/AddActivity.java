@@ -50,6 +50,8 @@ import java.util.Date;
 import static com.github.makosful.todo.bll.notifications.NotificationHelper.CHANNEL_2_ID;
 
 public class AddActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
+    private static final String TAG = "AddActivity";
+
     private NotificationManagerCompat notificationManager;
     private EditText etTitle, etDescription;
     private TextView tvPriority, tvDate, tvTime;
@@ -141,6 +143,7 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
     private void handleCameraResponse() {
         // TODO: Handle the image response
         // URI saved in this.imagePath;
+        Log.d(TAG, "handleCameraResponse: " + this.imagePath);
     }
 
     /**
@@ -255,7 +258,9 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
                 mDate,
                 etDescription.getText().toString(),
                 tvPriority.getText().toString());
-        
+        String s = this.imagePath.toString();
+        // n.setThumbnailUrl(this.imagePath.toString());
+        n.setThumbnailUrl(s);
         Notice notice = model.addNotice(n); // Stores the notice to get the id
 
         //Adds the Id as an "Extra" in the Intent.
