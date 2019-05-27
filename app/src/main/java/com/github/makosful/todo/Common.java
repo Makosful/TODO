@@ -37,4 +37,5 @@ public class Common {
     public static final String EXTRA_DATA_NOTIFICATION_NOTICE = "notificationNotice";
     public static final String EXTRA_RESULT_TODO  = "resultTodo";
     public static final String EXTRA_DATA_UPDATE_ID = "updateId";
+    public static final String EXTRA_DATA_NOTICE_DETAILS = "notificationDetails";
 }

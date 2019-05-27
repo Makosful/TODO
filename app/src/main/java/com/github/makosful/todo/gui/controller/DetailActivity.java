@@ -64,7 +64,7 @@ public class DetailActivity extends AppCompatActivity {
         String title = this.notice.getTitle();
         tv_title.setText(title);
 
-        String notes = this.notice.getDateAndTime().toString();
+        String notes = this.notice.getDescription();
         tv_description.setText(notes);
 
         String url = this.notice.getThumbnailUrl();

@@ -35,7 +35,6 @@
             android:hint="@string/notice_description"
             android:inputType="textMultiLine|textCapWords"
             android:lines="2"
-            android:maxLines="2"
             android:minLines="1"
             android:scrollHorizontally="false"
             android:textColor="@android:color/white"

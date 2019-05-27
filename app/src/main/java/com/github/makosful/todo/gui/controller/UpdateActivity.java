@@ -50,7 +50,7 @@ public class UpdateActivity extends AppCompatActivity implements TimePickerDialo
     private Date mDate;
     private int noticeId;
     private int mMinute, mHour, mDay, mMonth, mYear;
-
+    private Switch mSwitch;
     private Notice notice;
 
     private MainModel model;
@@ -76,8 +76,11 @@ public class UpdateActivity extends AppCompatActivity implements TimePickerDialo
         tvTime = findViewById(R.id.tvTime);
         tvDate = findViewById(R.id.tvDate);
         tvPriority = findViewById(R.id.tvPriority);
-        // Set default value
-        tvPriority.setText(R.string.unimportant);
+        mSwitch = findViewById(R.id.priority_switch);
+
+        this.noticeId = Objects.requireNonNull(getIntent().getExtras()).getInt(Common.EXTRA_DATA_UPDATE_ID);
+        notice = model.getNotice(noticeId);
+        //Populate the fields
 
         // Gets all necessary fields to set timer for the given time
         c = Calendar.getInstance();
@@ -88,15 +91,14 @@ public class UpdateActivity extends AppCompatActivity implements TimePickerDialo
         mYear = c.get(Calendar.YEAR);
 
         //fill fields by default with current time when starting activity.
-        mDate = c.getTime();
+        mDate = notice.getDateAndTime();
         tvDate.setText(dateFormatter.format(mDate));
         tvTime.setText(timeFormatter.format(mDate));
-
-        int id = Objects.requireNonNull(getIntent().getExtras()).getInt(Common.EXTRA_DATA_UPDATE_ID);
-        this.noticeId = id;
-        notice = model.getNotice(noticeId);
-        //Populate the fields
         etTitle.setText(notice.getTitle());
+        tvPriority.setText(notice.getImportance());
+        if (tvPriority.getText().equals("Important")) {
+            mSwitch.setChecked(true);
+        }
         etDescription.setText(notice.getDescription());
         //TODO Add more fields if felt necessary?
 
@@ -241,6 +243,7 @@ public class UpdateActivity extends AppCompatActivity implements TimePickerDialo
             openChannelSettings();
             return;
         }
+
         AlarmManager deleteAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent myIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
         PendingIntent deletePendingIntent = PendingIntent.getBroadcast(getApplicationContext(),
@@ -264,8 +267,6 @@ public class UpdateActivity extends AppCompatActivity implements TimePickerDialo
 
         //runs the update
         Notice notice = model.updateNotice(n); // Stores the notice to get the id
-
-
 
         //Adds the Id as an "Extra" in the Intent.
         intent.putExtra(Common.EXTRA_DATA_NOTIFICATION_NOTICE, notice.getId());

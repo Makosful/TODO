@@ -2,14 +2,19 @@ package com.github.makosful.todo.bll.notifications;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+
+import com.github.makosful.todo.Common;
 import com.github.makosful.todo.R;
+import com.github.makosful.todo.gui.NotificationReceiver;
 
 public class NotificationHelper extends ContextWrapper {
 
@@ -22,9 +27,11 @@ public class NotificationHelper extends ContextWrapper {
     public static final String CHANNEL_2_ID = "Important notice channel";
     private NotificationManager noticeManager;
     private Bitmap bmp;
+    private Context ctx;
 
     public NotificationHelper(Context base) {
         super(base);
+        ctx = base;
         createNotificationChannels();
         bmp = BitmapFactory.decodeResource(getResources(), R.drawable.bossrob);
     }
@@ -60,8 +67,10 @@ public class NotificationHelper extends ContextWrapper {
         }
     }
 
-    public NotificationCompat.Builder getImportantNotification(String title, String description) {
-        //TODO add .setContentIntent
+    public NotificationCompat.Builder getImportantNotification(String title, String description, int id) {
+        Intent i = new Intent(this, NotificationReceiver.class);
+        PendingIntent pI = PendingIntent.getActivity(ctx, (int) System.currentTimeMillis(), i, 0);
+        i.putExtra(Common.EXTRA_DATA_NOTICE_DETAILS, id);
         return new NotificationCompat.Builder(getApplicationContext(), CHANNEL_2_ID)
                 .setSmallIcon(R.drawable.ic_notifications_important) // Icon that is displayed
                 .setContentTitle(title) // TITLE text
@@ -69,8 +78,11 @@ public class NotificationHelper extends ContextWrapper {
                 .setLargeIcon(bmp) // adds the "large" icon, when we expand the notification
                 .setStyle(new android.support.v4.media.app.NotificationCompat.MediaStyle())
                 .setPriority(NotificationCompat.PRIORITY_HIGH) // priority to help android decide the importance
-                .setCategory(NotificationCompat.CATEGORY_REMINDER) // category to help Android decide the type of notice
+                .setCategory(NotificationCompat.CATEGORY_ALARM) // category to help Android decide the type of notice
                 .setOnlyAlertOnce(false) // disables the app from not popping up every time.
+                .setContentIntent(pI)
+                .setLights(Color.RED, 500, 250)
+                .setVibrate(new long[] {0, 500, 250, 500}) // sets the vibration pattern
                 .setAutoCancel(true); //Allows to dismiss notification by tapping
     }
 
@@ -82,13 +94,19 @@ public class NotificationHelper extends ContextWrapper {
         }
     }
 
-    public NotificationCompat.Builder getDefaultNotification(String title, String description) {
+    public NotificationCompat.Builder getDefaultNotification(String title, String description, int id) {
+        Intent i = new Intent(this, NotificationReceiver.class);
+        PendingIntent pI = PendingIntent.getActivity(ctx, (int) System.currentTimeMillis(), i, 0);
+        i.putExtra(Common.EXTRA_DATA_NOTICE_DETAILS, id);
         //TODO add .setContentIntent
         return new NotificationCompat.Builder(getApplicationContext(), CHANNEL_1_ID)
                 .setContentTitle(title) // TITLE text
                 .setContentText(description) // BODY text
-                .setLights(Color.BLUE, 1000, 2000)
+                .setLights(Color.BLUE, 500, 500)
                 .setVibrate(new long[] {0, 500, 250, 500}) // sets the vibration pattern
+                .setContentIntent(pI)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT) // priority to help android decide the importance
                 .setSmallIcon(R.drawable.ic_notifications_default); // sets the icon of the notification
+
     }
 }
