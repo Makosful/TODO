@@ -136,8 +136,8 @@ public class UpdateActivity extends AppCompatActivity implements TimePickerDialo
      *      be taken in onActivityResult
      */
     private void handleCameraResponse() {
-        // TODO: Handle the image response
         // URI saved in this.imagePath;
+        Toast.makeText(this, "Image updated", Toast.LENGTH_LONG).show();
     }
 
     /**

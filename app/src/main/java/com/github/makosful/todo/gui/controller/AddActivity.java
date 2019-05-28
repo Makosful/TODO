@@ -141,8 +141,8 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
      *      be taken in onActivityResult
      */
     private void handleCameraResponse() {
-        // TODO: Handle the image response
         // URI saved in this.imagePath;
+        Toast.makeText(this, "Image saved", Toast.LENGTH_LONG).show();
         Log.d(TAG, "handleCameraResponse: " + this.imagePath);
     }
 

@@ -9,14 +9,23 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.MediaStore;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.github.makosful.todo.Common;
 import com.github.makosful.todo.R;
 import com.github.makosful.todo.gui.NotificationReceiver;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 public class NotificationHelper extends ContextWrapper {
+    private static final String TAG = "NotificationHelper";
 
     /**
      * The idea of this class is to upkeep D-R-Y and only do this once.
@@ -72,7 +81,12 @@ public class NotificationHelper extends ContextWrapper {
         i.putExtra(Common.EXTRA_DATA_NOTICE_DETAILS, id);
 
         if (imgPath != null) {
-            bmp = BitmapFactory.decodeFile(imgPath);
+            try {
+                Uri img = Uri.parse(imgPath);
+                bmp = MediaStore.Images.Media.getBitmap(this.getContentResolver(), img);
+            } catch (IOException e) {
+                Log.e(TAG, "getImportantNotification: Could not find an image \n" + e.getMessage(), e);
+            }
         }
 
         return new NotificationCompat.Builder(getApplicationContext(), CHANNEL_2_ID)

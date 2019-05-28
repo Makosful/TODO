@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+
+
     /**
      * This is the adapter class that's responsible for mapping the Notice Business Entity to the RecyclerView
      */
