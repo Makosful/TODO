@@ -34,14 +34,12 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.github.makosful.todo.Common;
 import com.github.makosful.todo.R;
 import com.github.makosful.todo.be.Notice;
 import com.github.makosful.todo.gui.Custom.Camera;
 import com.github.makosful.todo.gui.NotificationReceiver;
 import com.github.makosful.todo.gui.model.MainModel;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -60,10 +58,8 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
     private int noticeId = 1;
     private int mMinute, mHour, mDay, mMonth, mYear;
     private MainModel model;
-
     private Camera camera;
     private Uri imagePath;
-
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd MMMM yyyy");
     private SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss z");
 
@@ -321,22 +317,22 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
         notificationManager.notify(noticeId++, notice);
     }
 
-
     /**
      * Opens the settings tab for our application. The way we do this is feed android our package name
      * so it knows which app to open the settings for. We do this on both API >= 26 as well as above.
      */
     private void openSettings() {
-        Toast.makeText(this, "Notifications have to be enabled!", Toast.LENGTH_LONG).show();
         // check if SDK >= Oreo (26)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Intent i = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
             i.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
             startActivity(i);
+            Toast.makeText(this, "Notifications have to be enabled!", Toast.LENGTH_LONG).show();
         } else {
             Intent i = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             i.setData(Uri.parse("package:" + getPackageName()));
             startActivity(i);
+            Toast.makeText(this, "Notifications have to be enabled!", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -349,6 +345,7 @@ public class AddActivity extends AppCompatActivity implements TimePickerDialog.O
         i.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
         i.putExtra(Settings.EXTRA_CHANNEL_ID, com.github.makosful.todo.bll.notifications.NotificationHelper.CHANNEL_2_ID);
         startActivity(i);
+        Toast.makeText(this, "Notice Channel has to be enabled!", Toast.LENGTH_LONG).show();
     }
 
     /**
