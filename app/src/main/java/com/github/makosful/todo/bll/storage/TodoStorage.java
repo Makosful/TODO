@@ -1,15 +1,15 @@
 package com.github.makosful.todo.bll.storage;
 
-import com.github.makosful.todo.be.Todo;
+import com.github.makosful.todo.be.Notice;
 import com.github.makosful.todo.dal.IDAL;
 
 import java.util.List;
 
 /**
  * This class is responsible for handling any and all validation regarding the act of reading and
- * writing TODO items to and from storage
+ * writing to do items to and from storage
  */
-public class TodoStorage implements IStorage<Todo> {
+public class TodoStorage implements IStorage<Notice> {
     /**
      * Implementation of the DataAccessLayer Facade
      */
@@ -20,22 +20,22 @@ public class TodoStorage implements IStorage<Todo> {
     }
 
     @Override
-    public boolean create(Todo item) {
+    public Notice create(Notice item) {
         return this.data.getTodoStorage().create(item);
     }
 
     @Override
-    public Todo read(int id) {
+    public Notice read(int id) {
         return this.data.getTodoStorage().read(id);
     }
 
     @Override
-    public List<Todo> readAll() {
+    public List<Notice> readAll() {
         return this.data.getTodoStorage().readAll();
     }
 
     @Override
-    public boolean update(Todo item) {
+    public Notice update(Notice item) {
         return this.data.getTodoStorage().update(item);
     }
 

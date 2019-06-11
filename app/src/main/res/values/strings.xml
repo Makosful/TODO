@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">TODO</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="details">Details</string>
+    <string name="defaultNotice">Default Notice</string>
+    <string name="importantNotice">Important Notice</string>
+    <string name="timeDialog">Time dialog</string>
+    <string name="dateDialog">Date dialog</string>
+    <string name="notice_title">Enter title</string>
+    <string name="notice_title2">Edit title</string>
+    <string name="notice_description">Enter a description</string>
+    <string name="notice_description2">Edit the description</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="priority">Priority</string>
+    <string name="important">Important</string>
+    <string name="unimportant">Default</string>
+    <string name="add">Add Activity</string>
+    <string name="edit">Edit Activity</string>
+    <string name="pic">Add Picture</string>
+    <string name="pic2">Edit Picture</string>
+    <string name="update">Update Activity</string>
+    <string name="noticeIconDescription">The icon which indicates whether the notification is active or inactive</string>
+    <string name="noticeThumbnailDescription">The thumbnail of the picture taken associated with the alarm</string>
 </resources>

@@ -1,6 +1,8 @@
 package com.github.makosful.todo.bll;
 
-import com.github.makosful.todo.be.Todo;
+import android.content.Context;
+
+import com.github.makosful.todo.be.Notice;
 import com.github.makosful.todo.bll.storage.IStorage;
 import com.github.makosful.todo.bll.storage.TodoStorage;
 import com.github.makosful.todo.dal.DataLayerFacade;
@@ -12,18 +14,18 @@ import com.github.makosful.todo.dal.IDAL;
  */
 public class BusinessLayerFacade implements IBLL {
     private IDAL data;
-    private IStorage<Todo> todoStorage;
+    private IStorage<Notice> todoStorage;
 
-    public BusinessLayerFacade() {
+    public BusinessLayerFacade(Context context) {
         // Creates an instance of the Data Layer Facade to pass around
-        this.data = new DataLayerFacade();
+        this.data = new DataLayerFacade(context);
 
         // Passes the DAL facade to the Storage handler
         this.todoStorage = new TodoStorage(data);
     }
 
     @Override
-    public IStorage<Todo> getTodoStorage() {
+    public IStorage<Notice> getTodoStorage() {
         return this.todoStorage;
     }
 }

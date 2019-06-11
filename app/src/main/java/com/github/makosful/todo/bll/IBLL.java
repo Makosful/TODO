@@ -1,6 +1,6 @@
 package com.github.makosful.todo.bll;
 
-import com.github.makosful.todo.be.Todo;
+import com.github.makosful.todo.be.Notice;
 import com.github.makosful.todo.bll.storage.IStorage;
 
 /**
@@ -11,8 +11,8 @@ import com.github.makosful.todo.bll.storage.IStorage;
  */
 public interface IBLL {
     /**
-     * Gets the local instance of the TODO storage
-     * @return An instance of the TODO storage
+     * Gets the local instance of the to do storage
+     * @return An instance of the to do storage
      */
-    IStorage<Todo> getTodoStorage();
+    IStorage<Notice> getTodoStorage();
 }

@@ -2,44 +2,56 @@ package com.github.makosful.todo.gui.model;
 
 import android.content.Context;
 
-import com.github.makosful.todo.be.Todo;
+import com.github.makosful.todo.be.Notice;
 import com.github.makosful.todo.bll.BusinessLayerFacade;
 import com.github.makosful.todo.bll.IBLL;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainModel {
+    private static final String TAG = "MainModel";
+
     /**
      * Logic Layer Access
      */
     private IBLL logic;
 
-    /**
-     * The context in which this model class lives
-     */
+    // Instance variables
+    private List<Notice> noticeList;
     private Context context;
 
-    // Instance variables
-    private List<Todo> todoList;
-
     public MainModel(Context context) {
-        this.logic = new BusinessLayerFacade();
+        this.logic = new BusinessLayerFacade(context);
+        // The context in which this model class lives
         this.context = context;
-
-        this.todoList = new ArrayList<>();
-        this.todoList.add(new Todo("First"));
-        this.todoList.add(new Todo("Second"));
-        this.todoList.add(new Todo("Third"));
-        this.todoList.add(new Todo("Fourth"));
-        this.todoList.add(new Todo("Fifth"));
+        this.noticeList = this.logic.getTodoStorage().readAll();
     }
 
     /**
-     * Gets the cached list of Todo items
-     * @return Returns a List collection of all Todo items
+     * Gets the cached list of Notice items
+     * @return Returns a List collection of all Notice items
      */
-    public List<Todo> getTodoList() {
-        return this.todoList;
+    public List<Notice> getNoticeList() {
+        return this.noticeList;
+    }
+
+    /**
+     *
+     * @param id The Id given to find the wanted Notice Item
+     * @return Returns the item with the given Id from the Notice Items List
+     */
+    public Notice getNotice(int id) {
+        return this.logic.getTodoStorage().read(id);
+    }
+
+    public boolean delete(int id) {
+        return this.logic.getTodoStorage().delete(id);
+    }
+
+    public Notice addNotice(Notice notice) {
+        return this.logic.getTodoStorage().create(notice);
+    }
+
+    public Notice updateNotice(Notice n) { return this.logic.getTodoStorage().update(n);
     }
 }
